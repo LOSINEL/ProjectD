@@ -1,6 +1,8 @@
 public static class Nums
 {
     public const int num = 10;
-    public const float sprintStamina = 20f;
-    public const float staminaRecovery = 50f;
+    public const int sprintStamina = 40;
+    public const int staminaRecovery = 40;
+    public const float sprintSpeed = 1.3f;
+    public const float hpRecoverTime = 1f;
 }

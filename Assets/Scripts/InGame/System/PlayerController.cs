@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody rigid;
     Animator animator;
     [SerializeField] bool canJump = true;
+    bool restoreSp = false;
+    Coroutine restoreSp_IE;
 
     private void Awake()
     {
@@ -37,26 +39,41 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         float h = Input.GetAxisRaw("Horizontal");
-        if (h == 0f)
+        if (h == 0f && !restoreSp)
         {
-            RestoreStamina();
+            restoreSp_IE = StartCoroutine(RestoreStamina());
             return;
         }
-        if (IsSprint()) h *= 1.5f;
-        tr.Translate(new Vector3(h, 0, 0) * Player.instance.Data.GetStat(Enums.STAT_TYPE.MVSPD).StatValue * Time.deltaTime);
+        else if (h == 0f && restoreSp)
+        {
+            return;
+        }
+        else if (h != 0f)
+        {
+            if (h < 0) transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+            else transform.rotation = Quaternion.Euler(Vector3.zero);
+            restoreSp = false;
+            StopCoroutine(restoreSp_IE);
+        }
+        if (IsSprint()) h *= Nums.sprintSpeed;
+        tr.Translate(new Vector3(h, 0, 0) * Player.instance.Data.MoveSpeed * Time.deltaTime, Space.World);
     }
 
-    void RestoreStamina()
+    IEnumerator RestoreStamina()
     {
-        if (Player.instance.Data.GetStat(Enums.STAT_TYPE.NSTAMINA).StatValue < Player.instance.Data.GetStat(Enums.STAT_TYPE.MSTAMINA).StatValue)
-            Player.instance.Data.AddStat(Enums.STAT_TYPE.NSTAMINA, Nums.staminaRecovery * Time.deltaTime);
+        while (true)
+        {
+            restoreSp = true;
+            Player.instance.RecoverSp(Nums.staminaRecovery * Time.deltaTime);
+            yield return null;
+        }
     }
 
     bool IsSprint()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && Player.instance.Data.GetStat(Enums.STAT_TYPE.NSTAMINA).StatValue > 0f)
+        if (Input.GetKey(KeyCode.LeftShift) && Player.instance.NowSp > 0f)
         {
-            Player.instance.Data.SubStat(Enums.STAT_TYPE.NSTAMINA, Time.deltaTime * Nums.sprintStamina);
+            Player.instance.SubSp(Nums.sprintStamina * Time.deltaTime);
             return true;
         }
         else return false;
@@ -66,16 +83,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
-            rigid.AddForce(Vector3.up * Player.instance.Data.GetStat(Enums.STAT_TYPE.JUMP_POWER).StatValue, ForceMode.Impulse);
+            rigid.AddForce(Vector3.up * Player.instance.Data.JumpPower, ForceMode.Impulse);
             canJump = false;
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag(Strings.tag_Ground))
-        {
-            canJump = true;
-        }
-    }
+    public void SetCanJump(bool tf) => canJump = tf;
 }

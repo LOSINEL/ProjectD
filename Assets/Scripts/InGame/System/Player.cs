@@ -7,10 +7,13 @@ public class Player : MonoBehaviour
     public static Player instance;
 
     [SerializeField] PlayerData data;
-
-
+    [SerializeField] int nowHp;
+    [SerializeField] float nowSp;
+    [SerializeField] bool isLiving = true;
 
     public PlayerData Data { get { return data; } }
+    public int NowHp { get { return nowHp; } }
+    public float NowSp { get { return nowSp; } }
 
     private void Awake()
     {
@@ -19,34 +22,110 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        
+        InitStat();
+        StartCoroutine(RecoverHp());
+    }
+
+    IEnumerator RecoverHp()
+    {
+        WaitForSeconds waitTime = new WaitForSeconds(Nums.hpRecoverTime);
+        while (true)
+        {
+            if (isLiving)
+            {
+                RecoverHp(UpgradeManager.instance.HpRecov);
+            }
+            yield return waitTime;
+        }
     }
 
     void InitStat()
     {
+        nowHp = data.MaxHp;
+        nowSp = data.MaxSp;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.CompareTag(Strings.tag_Monster))
+        {
+            GetDamaged(collision.transform.GetComponent<Monster>().Damage);
+        }
+    }
+
+    public void RecoverHp(int hp)
+    {
+        if (nowHp + hp > data.MaxHp)
+        {
+            nowHp = data.MaxHp;
+        }
+        else
+        {
+            nowHp += hp;
+        }
+    }
+
+    public void GetDamaged(int damage)
+    {
+        int tmpDmg = damage - data.Defense;
+        if (tmpDmg < 0) tmpDmg = 0;
+        if (nowHp - tmpDmg <= 0)
+        {
+            nowHp = 0;
+            Die();
+        }
+        else
+        {
+            nowHp -= tmpDmg;
+        }
+    }
+
+    public void SubSp(float sp)
+    {
+        if (nowSp - sp < 0f)
+        {
+            nowSp = 0f;
+        }
+        else
+        {
+            nowSp -= sp;
+        }
+    }
+
+    void Die()
+    {
+        // die;
+    }
+
+    public void RecoverSp(float sp)
+    {
+        if (nowSp + sp > data.MaxSp)
+        {
+            nowSp = data.MaxSp;
+        }
+        else
+        {
+            nowSp += sp;
+        }
     }
 
     [System.Serializable]
     public class PlayerData
     {
-        [SerializeField] SerializableDictionary<Enums.STAT_TYPE, Stat> stats = new();
+        [SerializeField] int damage;
+        [SerializeField] int maxHp;
+        [SerializeField] int defense;
+        [SerializeField] float maxSp;
+        [SerializeField] float attackSpeed;
+        [SerializeField] float moveSpeed;
+        [SerializeField] float jumpPower;
 
-        public Stat GetStat(Enums.STAT_TYPE statType) => stats.GetValue(statType);
-
-        public void AddStat(Enums.STAT_TYPE statType, float num) => stats.GetValue(statType).AddStat(num);
-        public void SubStat(Enums.STAT_TYPE statType, float num) => stats.GetValue(statType).SubStat(num);
-    }
-
-    [System.Serializable]
-    public class Stat
-    {
-        [SerializeField] string statName;
-        [SerializeField] float statValue;
-
-        public string StatName { get { return statName; } }
-        public float StatValue { get { return statValue; } }
-
-        public void AddStat(float num) => statValue += num;
-        public void SubStat(float num) => statValue -= num;
+        public int Damage { get { return damage; } }
+        public int MaxHp { get { return maxHp; } }
+        public int Defense { get { return defense; } }
+        public float MaxSp { get { return maxSp; } }
+        public float AttackSpeed { get { return attackSpeed; } }
+        public float MoveSpeed { get { return moveSpeed; } }
+        public float JumpPower { get { return jumpPower; } }
     }
 }
