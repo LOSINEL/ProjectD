@@ -25,6 +25,8 @@ public class GameSettingsController : MonoBehaviour
     {
         _controllers = _gameSettingsWindow.GetComponentsInChildren<AbstractGameSettingController>();
 
+        // add each IGameSettingReadable to dictionary
+        //  by its GAME_SETTING_TYPE.
         _gameSettings = new Dictionary<Enums.GAME_SETTING_TYPE, IGameSettingReadable>();
         foreach (AbstractGameSettingController controller in _controllers)
         {
@@ -48,6 +50,11 @@ public class GameSettingsController : MonoBehaviour
     public float GetBGMVolumn()
     {
         return (float)GetSettingValue(Enums.GAME_SETTING_TYPE.BGM_VOLUMN);
+    }
+
+    public float GetSFXVolumn()
+    {
+        return (float)GetSettingValue(Enums.GAME_SETTING_TYPE.SFX_VOLUMN);
     }
 
     private object GetSettingValue(Enums.GAME_SETTING_TYPE settingType)
