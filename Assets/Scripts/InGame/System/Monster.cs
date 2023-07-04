@@ -18,6 +18,16 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
+        if (enemyCheck)
+        {
+            MoveToPlayer();
+        }
+    }
+
+    void MoveToPlayer()
+    {
+        Vector3 tmpDir = Player.instance.transform.position - transform.position;
+        transform.Translate(tmpDir.normalized * Time.deltaTime * monsterData.MoveSpeed);
     }
 
     public void CheckEnemy()
