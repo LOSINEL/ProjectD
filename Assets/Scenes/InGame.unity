@@ -240,8 +240,14 @@ MonoBehaviour:
     valueList:
     - {fileID: 11400000, guid: ba1c3a7f88481d04d9091bdbd1214cd4, type: 2}
   consumables:
-    keyList: []
-    valueList: []
+    keyList:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    valueList:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   item: {fileID: 11400000, guid: ba1c3a7f88481d04d9091bdbd1214cd4, type: 2}
 --- !u!1 &149799720 stripped
 GameObject:

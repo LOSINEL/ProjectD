@@ -39,16 +39,13 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         float h = Input.GetAxisRaw("Horizontal");
-        if (h == 0f && !restoreSp)
+        if (h == 0f)
         {
-            restoreSp_IE = StartCoroutine(RestoreStamina());
+            if (!restoreSp)
+                restoreSp_IE = StartCoroutine(RestoreStamina());
             return;
         }
-        else if (h == 0f && restoreSp)
-        {
-            return;
-        }
-        else if (h != 0f)
+        else
         {
             if (h < 0) transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
             else transform.rotation = Quaternion.Euler(Vector3.zero);
