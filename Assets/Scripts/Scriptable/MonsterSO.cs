@@ -1,23 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterSO : MonoBehaviour
+[CreateAssetMenu]
+public class MonsterSO : ScriptableObject
 {
     [SerializeField] string monsterName;
-    [SerializeField] float damage;
+    [SerializeField] int damage;
+    [SerializeField] int maxHp;
+    [SerializeField] int defense;
     [SerializeField] float attackSpeed;
-    [SerializeField] float maxHp;
     [SerializeField] float moveSpeed;
-    [SerializeField] bool isBoss;
+    [SerializeField] bool isGround;
+    [SerializeField] bool isMeleeAttack;
+    [SerializeField] Enums.MONSTER_TYPE monsterType;
     [SerializeField] DropItem[] dropItems;
 
     public string MonsterName { get { return monsterName; } }
-    public float Damage { get { return damage; } }
+    public int Damage { get { return damage; } }
+    public int MaxHp { get { return maxHp; } }
+    public int Defense { get { return defense; } }
     public float AttackSpeed { get { return attackSpeed; } }
-    public float MaxHp { get { return maxHp; } }
     public float MoveSpeed { get { return moveSpeed; } }
-    public bool IsBoss { get { return isBoss; } }
+    public bool IsGround { get { return isGround; } }
+    public bool IsMeleeAttack { get { return isMeleeAttack; } }
+    public Enums.MONSTER_TYPE MonsterType { get { return monsterType; } }
+    public DropItem[] DropItems { get { return dropItems; } }
 
     public class DropItem
     {
