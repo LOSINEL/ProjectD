@@ -10,14 +10,24 @@ public class Player : MonoBehaviour
     [SerializeField] int nowHp;
     [SerializeField] float nowSp;
     [SerializeField] bool isLiving = true;
+    [SerializeField] MediKit mediKit;
 
     public PlayerData Data { get { return data; } }
     public int NowHp { get { return nowHp; } }
     public float NowSp { get { return nowSp; } }
+    public MediKit MediKit { get { return mediKit; } }
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void Start()

@@ -9,7 +9,6 @@ public class ItemManager : MonoBehaviour
     [SerializeField] SerializableDictionary<ItemSO, WeaponSO> weapons = new();
     [SerializeField] SerializableDictionary<ItemSO, ArmorSO> armors = new();
     [SerializeField] SerializableDictionary<ItemSO, AccessorySO> accessories = new();
-    [SerializeField] SerializableDictionary<ItemSO, ConsumableSO> consumables = new();
     [SerializeField] ItemSO item;
 
     private void Awake()
@@ -27,8 +26,6 @@ public class ItemManager : MonoBehaviour
                 return armors.GetValue(item);
             case Enums.ITEM_TYPE.ACCESSORY:
                 return accessories.GetValue(item);
-            case Enums.ITEM_TYPE.CONSUMABLE:
-                return consumables.GetValue(item);
             default:
                 return null;
         }
