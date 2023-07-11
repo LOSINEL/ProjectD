@@ -9,7 +9,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioClip[] bgms;
     [SerializeField] AudioClip[] sfxs;
     [SerializeField] AudioSource bgmPlayer;
-    [SerializeField] AudioSource sfxPlayer;
+    [SerializeField] float sfxVolume = 1f;
 
     private void Awake()
     {
@@ -25,7 +25,6 @@ public class SoundManager : MonoBehaviour
     }
 
     public void SetBgmVolume(float volume) => bgmPlayer.volume = volume;
-    public void SetSfxVolume(float volume) => sfxPlayer.volume = volume;
 
     public void PlayBgm(BGM bgm)
     {
@@ -33,11 +32,19 @@ public class SoundManager : MonoBehaviour
         bgmPlayer.Play();
     }
 
-    public void PlaySfx(SFX sfx)
+    public void PlaySfx(SFX sfx, GameObject obj)
     {
-        sfxPlayer.PlayOneShot(sfxs[(int)sfx]);
+        if (!obj.TryGetComponent(out AudioSource tmp))
+        {
+            obj.AddComponent<AudioSource>().volume = sfxVolume;
+        }
+        else
+        {
+            tmp.volume = sfxVolume;
+        }
+        tmp.PlayOneShot(sfxs[(int)sfx]);
     }
 }
 
 public enum BGM { MAIN_MENU, LOBBY }
-public enum SFX { }
+public enum SFX { MOUSE_CLICK }

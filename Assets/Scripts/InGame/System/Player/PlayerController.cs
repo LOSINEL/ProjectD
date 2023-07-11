@@ -39,20 +39,22 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         float h = Input.GetAxisRaw("Horizontal");
-        if (h == 0f)
+        if (h < 0) transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+        else if (h > 0) transform.rotation = Quaternion.Euler(Vector3.zero);
+        if (IsSprint(h))
         {
-            if (!restoreSp)
-                restoreSp_IE = StartCoroutine(RestoreStamina());
-            return;
+            h *= Nums.sprintSpeed;
+            if (restoreSp)
+            {
+                restoreSp = false;
+                StopCoroutine(restoreSp_IE);
+            }
         }
         else
         {
-            if (h < 0) transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
-            else transform.rotation = Quaternion.Euler(Vector3.zero);
-            restoreSp = false;
-            StopCoroutine(restoreSp_IE);
+            if (!restoreSp)
+                restoreSp_IE = StartCoroutine(RestoreStamina());
         }
-        if (IsSprint()) h *= Nums.sprintSpeed;
         tr.Translate(new Vector3(h, 0, 0) * Player.instance.Data.MoveSpeed * Time.deltaTime, Space.World);
     }
 
@@ -66,9 +68,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    bool IsSprint()
+    bool IsSprint(float axis)
     {
-        if (Input.GetKey(KeyCode.LeftShift) && Player.instance.NowSp > 0f)
+        if (Input.GetKey(KeyCode.LeftShift) && Player.instance.NowSp > 0f && axis != 0f)
         {
             Player.instance.SubSp(Nums.sprintStamina * Time.deltaTime);
             return true;
