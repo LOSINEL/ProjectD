@@ -9,6 +9,7 @@ TagManager:
   - Monster
   - Npc
   - DropItem
+  - GroundGroup
   layers:
   - Default
   - TransparentFX
