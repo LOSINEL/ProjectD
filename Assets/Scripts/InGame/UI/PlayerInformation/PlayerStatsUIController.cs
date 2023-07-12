@@ -17,13 +17,13 @@ public class PlayerStatsUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        _updateStatTextCoroutine = UpdateStatTexts();
-        StartCoroutine(_updateStatTextCoroutine);
+        //_updateStatTextCoroutine = UpdateStatTexts();
+        //StartCoroutine(_updateStatTextCoroutine);
     }
 
     private void OnDisable()
     {
-        StopCoroutine(_updateStatTextCoroutine);
+        //StopCoroutine(_updateStatTextCoroutine);
     }
 
     /// <summary>
