@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rigid;
     Animator animator;
     [SerializeField] bool canJump = true;
+    [SerializeField] bool canJump2 = false;
     bool restoreSp = false;
     Coroutine restoreSp_IE;
 
@@ -80,12 +81,22 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && canJump)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            rigid.AddForce(Vector3.up * Player.instance.Data.JumpPower, ForceMode.Impulse);
-            canJump = false;
+            if (canJump)
+            {
+                rigid.velocity = Vector3.up * Player.instance.Data.JumpPower;
+                canJump = false;
+                canJump2 = true;
+            }
+            else if (canJump2)
+            {
+                rigid.velocity = Vector3.up * Player.instance.Data.JumpPower;
+                canJump2 = false;
+            }
         }
     }
 
     public void SetCanJump(bool tf) => canJump = tf;
+    public void SetCanJump2(bool tf) => canJump2 = tf;
 }

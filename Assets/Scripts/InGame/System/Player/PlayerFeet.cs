@@ -11,11 +11,12 @@ public class PlayerFeet : MonoBehaviour
         controller = GetComponentInParent<PlayerController>();
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag(Strings.tag_Ground))
         {
             controller.SetCanJump(true);
+            controller.SetCanJump2(false);
         }
     }
 
