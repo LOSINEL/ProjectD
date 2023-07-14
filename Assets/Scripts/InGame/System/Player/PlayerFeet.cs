@@ -19,12 +19,4 @@ public class PlayerFeet : MonoBehaviour
             controller.SetCanJump2(false);
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(Strings.tag_Ground))
-        {
-            controller.SetCanJump(false);
-        }
-    }
 }

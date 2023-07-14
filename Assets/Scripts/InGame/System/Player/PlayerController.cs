@@ -39,9 +39,9 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        if (h < 0) transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
-        else if (h > 0) transform.rotation = Quaternion.Euler(Vector3.zero);
+        float h = Input.GetAxisRaw(Strings.moveHorizontal);
+        if (h < 0) tr.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+        else if (h > 0) tr.rotation = Quaternion.Euler(Vector3.zero);
         if (IsSprint(h))
         {
             h *= Nums.sprintSpeed;
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
             if (!restoreSp)
                 restoreSp_IE = StartCoroutine(RestoreStamina());
         }
-        tr.Translate(new Vector3(h, 0, 0) * Player.instance.Data.MoveSpeed * Time.deltaTime, Space.World);
+        rigid.MovePosition(rigid.position + new Vector3(h, 0, 0) * Player.instance.Data.MoveSpeed * Time.deltaTime);
     }
 
     IEnumerator RestoreStamina()
