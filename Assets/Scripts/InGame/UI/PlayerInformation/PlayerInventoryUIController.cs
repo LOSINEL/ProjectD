@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-using Assets.Scripts.InGame.UI;
 
 public class PlayerInventoryUIController : MonoBehaviour
 {

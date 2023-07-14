@@ -1,25 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.Events;
 
 using Assets.Scripts.InGame.System;
 
 public class InventoryItemSlot :
     MonoBehaviour,
     IInventoryObserver,
-    IPointerDownHandler,
-    IPointerUpHandler
+    IPointerDownHandler
 {
     private Image _itemImage;
     private IInventorySubject _inventorySubject;
+    [SerializeField]
+    private InventoryItemSlotDragHandler _itemSlotDragHandler;
+    private Action _endDragCallback;
 
     void Start()
     {
         _itemImage = GetComponent<Image>();
     }
+
     public void Initialize(IInventorySubject inventorySubject)
     {
         Debug.Assert(inventorySubject != null, "InventorySubject가 null입니다.");
@@ -36,11 +37,24 @@ public class InventoryItemSlot :
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (_itemSlotDragHandler.IsDraggable)
+        {
+            _itemSlotDragHandler.StartDrag(
+                this,
+                _inventorySubject.GetItem(this));
+        }
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnTriggerExit2D(Collider2D collision)
     {
-        // if player do dragging slot, stop dragging.
-        // if slot collide with other slot, swap item.
+        if (collision.gameObject == _itemSlotDragHandler.gameObject)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+            _inventorySubject.SwapItem(
+                       _itemSlotDragHandler.DragCallerObserver,
+                       this);
+            }
+        }
     }
 }

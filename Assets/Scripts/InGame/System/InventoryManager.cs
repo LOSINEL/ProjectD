@@ -110,4 +110,9 @@ class InventoryManager : MonoBehaviour, IInventorySubject
         }
         return true;
     }
+
+    void Update()
+    {
+        Notify();
+    }
 }
