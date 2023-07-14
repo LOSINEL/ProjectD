@@ -47,14 +47,19 @@ public class InventoryItemSlot :
 
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject == _itemSlotDragHandler.gameObject)
+        if (collision.gameObject == _itemSlotDragHandler.gameObject && IsItemSlotEmpty())
         {
             if (Input.GetMouseButtonUp(0))
             {
-            _inventorySubject.SwapItem(
-                       _itemSlotDragHandler.DragCallerObserver,
-                       this);
+                _inventorySubject.SwapItem(
+                    _itemSlotDragHandler.DragCallerObserver,
+                    this);
             }
         }
+    }
+
+    private bool IsItemSlotEmpty()
+    {
+        return _inventorySubject.IsItemSlotEmpty(this);
     }
 }

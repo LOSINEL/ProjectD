@@ -91,6 +91,12 @@ class InventoryManager : MonoBehaviour, IInventorySubject
         }
     }
 
+    public bool IsItemSlotEmpty(IInventoryObserver inventoryObserver)
+    {
+        int index = _inventoryObserverList.IndexOf(inventoryObserver);
+        return _itemList[index] == _emptyItemSO;
+    }
+
     public ItemSO GetItem(IInventoryObserver inventoryObserver)
     {
         int index = _inventoryObserverList.IndexOf(inventoryObserver);

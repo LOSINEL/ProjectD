@@ -20,6 +20,7 @@ namespace Assets.Scripts.InGame.System
         public abstract void RemoveObserver(IInventoryObserver inventoryObserver);
         public abstract void Notify();
         public abstract ItemSO GetItem(IInventoryObserver inventoryObserver);
+        public abstract bool IsItemSlotEmpty(IInventoryObserver inventoryObserver);
 
         // 인벤토리의 _itemList를 수정하는 메소드는 여기에 정의하고
         // 구현은 Inventory에서 한다.
