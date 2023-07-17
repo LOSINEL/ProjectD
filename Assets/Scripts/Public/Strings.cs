@@ -2,13 +2,15 @@ public static class Strings
 {
     public static readonly string[] sceneNames = new string[(int)Enums.SCENE_TYPE.ENUM_SIZE] { "MainMenu", "InGame" };
 
-    public static readonly string animation_Attack = "Attack";
+    public const string animation_Attack = "Attack";
+    public const string animation_Move = "Move";
+    public const string animation_Run = "Run";
 
-    public static readonly string moveHorizontal = "Horizontal";
+    public const string moveHorizontal = "Horizontal";
 
-    public static readonly string tag_Ground = "Ground";
-    public static readonly string tag_Player = "Player";
-    public static readonly string tag_Monster = "Monster";
-    public static readonly string tag_Npc = "Npc";
-    public static readonly string tag_DropItem = "DropItem";
+    public const string tag_Ground = "Ground";
+    public const string tag_Player = "Player";
+    public const string tag_Monster = "Monster";
+    public const string tag_Npc = "Npc";
+    public const string tag_DropItem = "DropItem";
 }

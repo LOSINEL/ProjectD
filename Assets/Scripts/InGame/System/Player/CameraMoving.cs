@@ -13,6 +13,6 @@ public class CameraMoving : MonoBehaviour
 
     private void LateUpdate()
     {
-        tr.position = Player.instance.transform.position + new Vector3(0f, 0f, -10f);
+        tr.position = Player.instance.transform.position + new Vector3(0f, 1f, -10f);
     }
 }

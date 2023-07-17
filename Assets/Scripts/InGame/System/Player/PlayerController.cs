@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IUpdate
 {
     Transform tr;
     Rigidbody rigid;
@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool canJump = true;
     [SerializeField] bool canJump2 = false;
     bool restoreSp = false;
+    bool canAttack = true;
+    float baseYRot;
+    float attackCoolTime = 0f;
     Coroutine restoreSp_IE;
 
     private void Awake()
@@ -17,9 +20,15 @@ public class PlayerController : MonoBehaviour
         tr = transform;
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        baseYRot = tr.eulerAngles.y;
     }
 
-    private void Update()
+    private void Start()
+    {
+        GetComponent<IUpdate>().Register();
+    }
+
+    public void ManagedUpdate()
     {
         if (true)
         {
@@ -31,19 +40,36 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0) && canAttack)
         {
             animator.SetTrigger(Strings.animation_Attack);
+            canAttack = false;
+            attackCoolTime = 1f / Player.instance.Data.AttackSpeed;
+        }
+        if (!canAttack && attackCoolTime > 0f)
+        {
+            attackCoolTime -= Time.deltaTime;
+        }
+        else if (attackCoolTime <= 0f)
+        {
+            canAttack = true;
         }
     }
 
     void Move()
     {
         float h = Input.GetAxisRaw(Strings.moveHorizontal);
-        if (h < 0) tr.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
-        else if (h > 0) tr.rotation = Quaternion.Euler(Vector3.zero);
+        if (h < 0) tr.rotation = Quaternion.Euler(new Vector3(0f, baseYRot + 180f, 0f));
+        else if (h > 0) tr.rotation = Quaternion.Euler(new Vector3(0f, baseYRot, 0f));
+        else
+        {
+            animator.SetBool(Strings.animation_Move, false);
+            return;
+        }
+        animator.SetBool(Strings.animation_Move, true);
         if (IsSprint(h))
         {
+            animator.SetBool(Strings.animation_Move, true);
             h *= Nums.sprintSpeed;
             if (restoreSp)
             {
@@ -53,6 +79,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            animator.SetBool(Strings.animation_Run, false);
             if (!restoreSp)
                 restoreSp_IE = StartCoroutine(RestoreStamina());
         }
