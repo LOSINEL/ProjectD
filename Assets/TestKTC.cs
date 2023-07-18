@@ -7,5 +7,6 @@ public class TestKTC : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+
     }
 }

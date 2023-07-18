@@ -4,16 +4,28 @@ using UnityEngine;
 
 using Assets.Scripts.InGame.System;
 
-class InventoryManager : MonoBehaviour, IInventorySubject
+class InventoryManager :
+    MonoBehaviour,
+    IInventorySubject,
+    IEquipmentSubject
 {
     public static InventoryManager instance;
 
     [SerializeField]
-    private List<ItemSO> _itemList;
+    private ItemSO _nullItem;
     [SerializeField]
+    private ItemSO _testItem;
+    [SerializeField]
+    private List<ItemSO> _inventory;
+    private List<IItemSlot> _inventorySlotList;
     private List<IInventoryObserver> _inventoryObserverList;
-    [SerializeField]
-    private ItemSO _emptyItemSO;
+    private Dictionary<Enums.ITEM_TYPE, EquipmentSO> _equipments;
+    private List<IEquipmentSlot> _equipmentSlotList;
+    private List<IEquipmentObserver> _equipmentObserverList;
+
+    // 이렇게 바꾸기
+    private List<(ItemSO, IInventoryObserver, IItemSlot)> _itemList;
+    private List<(EquipmentSO, IEquipmentObserver, IItemSlot)> _equipmentList;
 
     private void Awake()
     {
@@ -21,104 +33,201 @@ class InventoryManager : MonoBehaviour, IInventorySubject
         Initialize();
     }
 
+    void Update()
+    {
+        // for test
+        Notify();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            AddItem(_testItem);
+        }
+    }
+
     private void Initialize()
     {
+        _inventory = new();
+        _equipments = new();
         _inventoryObserverList = new();
-        _itemList = new();
+        _equipmentObserverList = new();
+        _inventorySlotList = new();
+        _equipmentSlotList = new();
     }
 
-    public void AddObserver(IInventoryObserver inventoryObserver)
-    {
-        if (_inventoryObserverList.Contains(inventoryObserver)) return;
+    /********** Implements of IInventorySubject **********/
 
-        _inventoryObserverList.Add(inventoryObserver);
-        _itemList.Add(_emptyItemSO);
+    public void AddObserver(IInventoryObserver observer)
+    {
+        if (_inventoryObserverList.Contains(observer)) return;
+
+        _inventoryObserverList.Add(observer);
+        _inventory.Add(null);
     }
 
-    public void RemoveObserver(IInventoryObserver inventoryObserver)
+    public void RemoveObserver(IInventoryObserver observer)
     {
-        int index = _inventoryObserverList.IndexOf(inventoryObserver);
+        int index = _inventoryObserverList.IndexOf(observer);
         if (index == -1) return;
-        
-        _inventoryObserverList.Remove(inventoryObserver);
-        _itemList.RemoveAt(index);
+
+        _inventoryObserverList.RemoveAt(index);
+        _inventory.RemoveAt(index);
+    }
+
+    public void Notify()
+    {
+        foreach (IInventoryObserver observer in _inventoryObserverList)
+        {
+            observer.UpdateObserver();
+        }
+        foreach (IEquipmentObserver observer in _equipmentObserverList)
+        {
+            observer.UpdateObserver();
+        }
+    }
+
+    public ItemSO GetState(IInventoryObserver observer)
+    {
+        int index = _inventoryObserverList.IndexOf(observer);
+
+        if (index == -1) return null;
+        return _inventory[index];
+    }
+
+    /********** Implements of IEquipmentSubject **********/
+
+    public void AddObserver(IEquipmentObserver observer)
+    {
+        if (_equipmentObserverList.Contains(observer)) return;
+
+        _equipmentObserverList.Add(observer);
+        _equipments.Add(observer.GetEquipmentType(), null);
+    }
+
+    public void RemoveObserver(IEquipmentObserver observer)
+    {
+        int index = _equipmentObserverList.IndexOf(observer);
+        if (index == -1) return;
+
+        _equipmentObserverList.RemoveAt(index);
+        _equipments.Remove(observer.GetEquipmentType());
+    }
+
+    public EquipmentSO GetState(IEquipmentObserver observer)
+    {
+        int index = _equipmentObserverList.IndexOf(observer);
+
+        if (index == -1) return null;
+        return _equipments[observer.GetEquipmentType()];
+    }
+
+    /********** Implements of InventoryManager **********/
+
+    public void AddItemSlot(IItemSlot itemSlot)
+    {
+        _inventorySlotList.Add(itemSlot);
+    }
+
+    public void RemoveItemSlot(IItemSlot itemSlot)
+    {
+        int index = _inventorySlotList.IndexOf(itemSlot);
+        if (index == -1) return;
+
+        _inventorySlotList.RemoveAt(index);
+        _inventory.RemoveAt(index);
+    }
+
+    public void AddEquipmentSlot(IEquipmentSlot equipmentSlot)
+    {
+        if (_equipmentSlotList.Contains(equipmentSlot)) return;
+
+        _equipmentSlotList.Add(equipmentSlot);
+    }
+
+    public void RemoveEquipmentSlot(IEquipmentSlot equipmentSlot)
+    {
+        int index = _equipmentSlotList.IndexOf(equipmentSlot);
+        if (index == -1) return;
+
+        _equipmentSlotList.RemoveAt(index);
     }
 
     public void AddItem(ItemSO item)
     {
-        if (IsInventoryFull()) return;
+        int index = FindEmptySlotIndex();
+        if (index == -1) return; // inventory is full.
 
+        _inventory[index] = item;
+    }
+
+    private int FindEmptySlotIndex()
+    {
         int index;
-        for(index = 0; index < _itemList.Count; index++)
+        for (index = 0; index < _inventorySlotList.Count; index++)
         {
-            if(_itemList[index] == _emptyItemSO)
+            if (_inventorySlotList[index].IsEmpty())
             {
-                break;
+                return index;
             }
         }
-        _itemList[index] = item;
+        return -1;
+    }
+
+    public void SwapItem(IItemSlot itemSlotA, IItemSlot itemSlotB)
+    {
+        /*
+         * inventory to equipment (need to check type)
+         * equipment to equipment (need to check type)
+         * equipment to inventory (if inventory item is not null,
+         *                         need to check type)
+         * inventory to inventory (no need to check type)
+         */
+        ItemSO itemA = itemSlotA.GetItem();
+        ItemSO itemB = itemSlotB.GetItem();
+        if(itemSlotB is IEquipmentSlot)
+        {
+            // inventory to equipment 
+            // equipment to inventory
+            // need to check type
+            if (itemB != null)
+            {
+                if (itemA.ItemType != itemB.ItemType) return;
+            }
+            else
+            {
+                if (itemA.ItemType != ((IEquipmentSlot)itemSlotB).GetEquipmentType()) return;
+            }
+        }
+        else if(itemSlotA is IEquipmentSlot)
+        {
+            // equipment to inventory
+            // need to check type if inventory item is not null.
+            if (itemB != null)
+            {
+                if (itemA.ItemType != itemB.ItemType) return;
+            }
+        }
+        else
+        {
+        }
+        ItemSO item = itemSlotA.GetItem();
+        itemSlotA.SetItem(itemSlotB.GetItem());
+        itemSlotB.SetItem(item);
+
 
         Notify();
     }
 
-    public void RemoveItem(ItemSO item)
+    public void SetItemToSlot(ItemSO item, IItemSlot itemSlot)
     {
-        int index = _itemList.IndexOf(item);
+        int index = _inventorySlotList.IndexOf(itemSlot);
         if (index == -1) return;
 
-        _itemList[index] = _emptyItemSO;
-        Notify();
+        _inventory[index] = item;
     }
 
-    public void SwapItem(IInventoryObserver inventoryObserverA, IInventoryObserver inventoryObserverB)
+    public void SetEquipmentToSlot(EquipmentSO equipment, IEquipmentSlot equipmentSlot)
     {
-        int indexA = _inventoryObserverList.IndexOf(inventoryObserverA);
-        int indexB = _inventoryObserverList.IndexOf(inventoryObserverB);
-        (_itemList[indexA], _itemList[indexB]) = (_itemList[indexB], _itemList[indexA]);
+        if (!_equipmentSlotList.Contains(equipmentSlot)) return;
 
-        Notify();
-    }
-
-    /// <summary>
-    /// _itemList에 어떤 내용이 수정되었다면 무조건 이 함수가 호출되어
-    /// 모든 아이템 슬롯칸이 변경을 인지하도록 해야합니다.
-    /// </summary>
-    public void Notify()
-    {
-        for (int i = 0; i < _inventoryObserverList.Count; i++)
-        {
-            _inventoryObserverList[i].UpdateObserver();
-        }
-    }
-
-    public bool IsItemSlotEmpty(IInventoryObserver inventoryObserver)
-    {
-        int index = _inventoryObserverList.IndexOf(inventoryObserver);
-        return _itemList[index] == _emptyItemSO;
-    }
-
-    public ItemSO GetItem(IInventoryObserver inventoryObserver)
-    {
-        int index = _inventoryObserverList.IndexOf(inventoryObserver);
-        if (index >= _itemList.Count) return null;
-
-        return _itemList[index];
-    }
-
-    public bool IsInventoryFull()
-    {
-        foreach(ItemSO item in _itemList)
-        {
-            if(item == _emptyItemSO)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    void Update()
-    {
-        Notify();
+        _equipments[equipmentSlot.GetEquipmentType()] = equipment;
     }
 }

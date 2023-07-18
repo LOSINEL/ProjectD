@@ -3,27 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Assets.Scripts.InGame.System;
+
 public class PlayerEquipmentUIController : MonoBehaviour
 {
-    [SerializeField]
-    private Image _weaponImage;
-    [SerializeField]
-    private Image _armorImage;
-    [SerializeField]
-    private Image _accessoryImage;
-
-    public void UpdateWeaponImage(WeaponSO weapon)
+    private void Start()
     {
-        _weaponImage.sprite = weapon.ItemSprite;
-    }
+        IEquipmentObserver[] _equipmentObservers = GetComponentsInChildren<IEquipmentObserver>();
 
-    public void UpdateArmorImage(ArmorSO armor)
-    {
-        _armorImage.sprite = armor.ItemSprite;
-    }
-
-    public void UpdateAccessoryImage(AccessorySO accessory)
-    {
-        _accessoryImage.sprite = accessory.ItemSprite;
+        foreach (IEquipmentObserver observer in _equipmentObservers)
+        {
+            observer.Initialize(InventoryManager.instance);
+        }
     }
 }

@@ -1,20 +1,23 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 using Assets.Scripts.InGame.System;
 
-public class InventoryItemSlot :
+public class EquipmentItemSlot :
     MonoBehaviour,
     IPointerDownHandler,
-    IInventoryObserver,
-    IItemSlot
+    IEquipmentObserver,
+    IEquipmentSlot
 {
     [SerializeField]
     private Sprite _slotImage;
     private Image _itemImage;
-    private IInventorySubject _inventorySubject;
+    private IEquipmentSubject _equipmentSubject;
+    [SerializeField]
+    private Enums.ITEM_TYPE _equipmentType;
     [SerializeField]
     private InventoryItemSlotDragHandler _itemSlotDragHandler;
 
@@ -44,29 +47,34 @@ public class InventoryItemSlot :
         }
     }
 
-    public void Initialize(IInventorySubject subject)
+    public void Initialize(IEquipmentSubject subject)
     {
-        _inventorySubject = subject;
-        _inventorySubject.AddObserver(this);
+        _equipmentSubject = subject;
+        _equipmentSubject.AddObserver(this);
 
-        InventoryManager.instance.AddItemSlot(this);
+        InventoryManager.instance.AddEquipmentSlot(this);
     }
 
     public void UpdateObserver()
     {
-        ItemSO item = _inventorySubject.GetState(this);
+        ItemSO item = _equipmentSubject.GetState(this);
 
         _itemImage.sprite = (item == null) ? _slotImage : item.ItemSprite;
     }
 
+    public Enums.ITEM_TYPE GetEquipmentType()
+    {
+        return _equipmentType;
+    }
+
     public ItemSO GetItem()
     {
-        return _inventorySubject.GetState(this);
+        return _equipmentSubject.GetState(this);
     }
 
     public void SetItem(ItemSO item)
     {
-        InventoryManager.instance.SetItemToSlot(item, this);
+        InventoryManager.instance.SetEquipmentToSlot((EquipmentSO)item, this);
     }
 
     public bool IsEmpty()
@@ -74,3 +82,4 @@ public class InventoryItemSlot :
         return GetItem() == null;
     }
 }
+

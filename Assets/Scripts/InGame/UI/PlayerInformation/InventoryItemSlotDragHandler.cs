@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,17 +11,16 @@ public class InventoryItemSlotDragHandler : MonoBehaviour
     private Image _itemImage;
     [SerializeField]
     private Collider2D _collider2d;
-    private IInventoryObserver _dragCallerObserver;
+    private IItemSlot _dragTargetItemSlot;
 
-    public IInventoryObserver DragCallerObserver
+    public bool IsDraggable { get { return _isDragging == false; } }
+    public IItemSlot DragTargetItemSlot
     {
         get
         {
-            return _dragCallerObserver;
+            return _dragTargetItemSlot ;
         }
     }
-
-    public bool IsDraggable { get { return _isDragging == false; } }
 
     private void Start()
     {
@@ -52,10 +48,10 @@ public class InventoryItemSlotDragHandler : MonoBehaviour
         transform.position = Input.mousePosition;
     }
 
-    public void StartDrag(IInventoryObserver dragCallerObserver, ItemSO item)
+    public void StartDrag(IItemSlot dragTargetItemSlot)
     {
-        _dragCallerObserver = dragCallerObserver;
-        _itemImage.sprite = item.ItemSprite;
+        _dragTargetItemSlot = dragTargetItemSlot;
+        _itemImage.sprite = _dragTargetItemSlot.GetItem().ItemSprite;
 
         _itemImage.enabled = true;
         _collider2d.enabled = true;

@@ -1,32 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets.Scripts.InGame.System
 {
-    public interface IInventoryObserver
+    public interface IObserver
     {
-        /// <summary>
-        /// Subject가 등록된 모든 Observer의 상태를 업데이트할 때
-        /// 호출되는 함수. <br/>
-        /// </summary>
-        /// <param name="item">Observer가 나타내야할 아이템</param>
         public abstract void UpdateObserver();
     }
 
-    public interface IInventorySubject
+    public interface ISubject<Observer, Type> 
+        where Observer : IObserver
+        where Type : ItemSO
     {
-        public abstract void AddObserver(IInventoryObserver inventoryObserver);
-        public abstract void RemoveObserver(IInventoryObserver inventoryObserver);
+        public abstract void AddObserver(Observer observer);
+        public abstract void RemoveObserver(Observer observer);
         public abstract void Notify();
-        public abstract ItemSO GetItem(IInventoryObserver inventoryObserver);
-        public abstract bool IsItemSlotEmpty(IInventoryObserver inventoryObserver);
+        public abstract Type GetState(Observer observer);
+    }
 
-        // 인벤토리의 _itemList를 수정하는 메소드는 여기에 정의하고
-        // 구현은 Inventory에서 한다.
+    public interface IInventorySubject : ISubject<IInventoryObserver, ItemSO> { }
+    public interface IInventoryObserver : IObserver { 
+        public abstract void Initialize(IInventorySubject subject);
+    }
+    public interface IEquipmentSubject : ISubject<IEquipmentObserver, EquipmentSO> { }
+    public interface IEquipmentObserver : IObserver
+    {
+        public abstract void Initialize(IEquipmentSubject subject);
+        public abstract Enums.ITEM_TYPE GetEquipmentType();
+    }
 
-        public void AddItem(ItemSO item) { }
-        public void RemoveItem(ItemSO item) { }
-        public void SwapItem(IInventoryObserver inventoryObserverA, IInventoryObserver inventoryObserverB) { }
+    public interface IItemSlot
+    {
+        public abstract ItemSO GetItem();
+        public abstract void SetItem(ItemSO item);
+        public abstract bool IsEmpty();
+    }
+
+    public interface IEquipmentSlot : IItemSlot
+    {
+        public abstract Enums.ITEM_TYPE GetEquipmentType();
     }
 }

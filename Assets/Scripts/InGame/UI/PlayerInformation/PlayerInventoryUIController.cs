@@ -1,19 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
+using Assets.Scripts.InGame.System;
 
 public class PlayerInventoryUIController : MonoBehaviour
 {
     private void Start()
     {
-        InventoryItemSlot[] itemSlots = GetComponentsInChildren<InventoryItemSlot>();
+        IInventoryObserver[] _inventoryObservers = GetComponentsInChildren<IInventoryObserver>();
 
-        Debug.Assert(InventoryManager.instance != null, "InventoryManager가 할당되지 않았습니다.");
-        foreach(InventoryItemSlot itemSlot in itemSlots)
+        foreach (IInventoryObserver _itemSlot in _inventoryObservers)
         {
-            itemSlot.Initialize(InventoryManager.instance);
+            _itemSlot.Initialize(InventoryManager.instance);
         }
     }
 }
