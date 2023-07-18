@@ -4,7 +4,9 @@ public static class Strings
 
     public const string animation_Attack = "Attack";
     public const string animation_Move = "Move";
-    public const string animation_Run = "Run";
+    public const string animation_Jump = "Jump";
+
+    public const string animation_MoveSpeed = "MoveSpeed";
 
     public const string moveHorizontal = "Horizontal";
 

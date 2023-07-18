@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour, IUpdate
         if (IsSprint(h))
         {
             animator.SetBool(Strings.animation_Move, true);
+            animator.SetFloat(Strings.animation_MoveSpeed, Nums.sprintSpeed);
             h *= Nums.sprintSpeed;
             if (restoreSp)
             {
@@ -79,7 +80,7 @@ public class PlayerController : MonoBehaviour, IUpdate
         }
         else
         {
-            animator.SetBool(Strings.animation_Run, false);
+            animator.SetFloat(Strings.animation_MoveSpeed, 1f);
             if (!restoreSp)
                 restoreSp_IE = StartCoroutine(RestoreStamina());
         }
@@ -112,12 +113,14 @@ public class PlayerController : MonoBehaviour, IUpdate
         {
             if (canJump)
             {
+                animator.SetTrigger(Strings.animation_Jump);
                 rigid.velocity = Vector3.up * Player.instance.Data.JumpPower;
                 canJump = false;
                 canJump2 = true;
             }
             else if (canJump2)
             {
+                animator.SetTrigger(Strings.animation_Jump);
                 rigid.velocity = Vector3.up * Player.instance.Data.JumpPower;
                 canJump2 = false;
             }
