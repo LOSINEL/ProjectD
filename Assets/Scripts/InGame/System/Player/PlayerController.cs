@@ -125,6 +125,7 @@ public class PlayerController : MonoBehaviour, IUpdate
                 canJump2 = false;
             }
         }
+        animator.SetFloat(Strings.animation_VelocityY, rigid.velocity.y);
     }
 
     public void SetCanJump(bool tf) => canJump = tf;
