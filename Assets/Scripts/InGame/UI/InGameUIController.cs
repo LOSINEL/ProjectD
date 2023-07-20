@@ -25,11 +25,14 @@ public class InGameUIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (_gameSettingsController.Instance.IsGameSettingsWindowClosed)
         {
-            if (_playerInformationUIController.IsPlayerInformationPopupClosed)
+            if (Input.GetKeyDown(KeyCode.I))
             {
-                _playerInformationUIController.OpenInformationPopup();
+                if (_playerInformationUIController.IsPlayerInformationPopupClosed)
+                {
+                    _playerInformationUIController.OpenInformationPopup();
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.Escape))
