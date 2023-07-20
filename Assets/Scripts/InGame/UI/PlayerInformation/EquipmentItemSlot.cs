@@ -59,7 +59,15 @@ public class EquipmentItemSlot :
     {
         ItemSO item = _equipmentSubject.GetState(this);
 
-        _itemImage.sprite = (item == null) ? _slotImage : item.ItemSprite;
+        if (item == null)
+        {
+            _itemImage.enabled = false;
+        }
+        else
+        {
+            _itemImage.sprite = item.ItemSprite;
+            _itemImage.enabled = true;
+        }
     }
 
     public Enums.ITEM_TYPE GetEquipmentType()

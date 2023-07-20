@@ -5,16 +5,11 @@ using UnityEngine.EventSystems;
 
 using Assets.Scripts.InGame.System;
 
-public class InventoryItemSlot :
-    MonoBehaviour,
-    IPointerDownHandler,
-    IInventoryObserver,
-    IItemSlot
+public class InventoryItemSlot : MonoBehaviour, IPointerDownHandler, IInventoryObserver, IItemSlot
 {
-    [SerializeField]
-    private Sprite _slotImage;
     private Image _itemImage;
     private IInventorySubject _inventorySubject;
+
     [SerializeField]
     private InventoryItemSlotDragHandler _itemSlotDragHandler;
 
@@ -37,9 +32,7 @@ public class InventoryItemSlot :
         {
             if (Input.GetMouseButtonUp(0))
             {
-                InventoryManager.instance.SwapItem(
-                   _itemSlotDragHandler.DragTargetItemSlot,
-                   this);
+                InventoryManager.instance.SwapItem(_itemSlotDragHandler.DragTargetItemSlot, this);
             }
         }
     }
@@ -56,7 +49,15 @@ public class InventoryItemSlot :
     {
         ItemSO item = _inventorySubject.GetState(this);
 
-        _itemImage.sprite = (item == null) ? _slotImage : item.ItemSprite;
+        if (item == null)
+        {
+            _itemImage.enabled = false;
+        }
+        else
+        {
+            _itemImage.sprite = item.ItemSprite;
+            _itemImage.enabled = true;
+        }
     }
 
     public ItemSO GetItem()
