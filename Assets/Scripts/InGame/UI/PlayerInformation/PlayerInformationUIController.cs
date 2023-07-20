@@ -6,20 +6,25 @@ using UnityEngine.UI;
 public class PlayerInformationUIController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _playerInformationWindow;
-    private bool IsInformationWindowOpen {
+    private GameObject _playerInformationPopup;
+    public bool IsPlayerInformationPopupOpen {
         get { 
-            return _playerInformationWindow.activeSelf; 
+            return _playerInformationPopup.activeSelf; 
         }
     }
 
-    public void OpenInformationWindow()
+    public bool IsPlayerInformationPopupClosed
     {
-        _playerInformationWindow.SetActive(true);
+        get { return _playerInformationPopup.activeSelf == false; }
     }
 
-    public void CloseInformationWindow()
+    public void OpenInformationPopup()
     {
-        _playerInformationWindow.SetActive(false);
+        _playerInformationPopup.SetActive(true);
+    }
+
+    public void CloseInformationPopup()
+    {
+        _playerInformationPopup.SetActive(false);
     }
 }
