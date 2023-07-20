@@ -6,8 +6,9 @@ public static class Strings
     public const string animation_Move = "Move";
     public const string animation_Jump = "Jump";
 
-    public const string animation_MoveSpeed = "MoveSpeed";
-    public const string animation_VelocityY = "VelocityY";
+    public const string anim_float_MoveSpeed = "MoveSpeed";
+    public const string anim_float_AttackSpeed = "AttackSpeed";
+    public const string anim_float_VelocityY = "VelocityY";
 
     public const string moveHorizontal = "Horizontal";
 

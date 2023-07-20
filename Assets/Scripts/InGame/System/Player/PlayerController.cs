@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour, IUpdate
     {
         if (Input.GetKey(KeyCode.Mouse0) && canAttack)
         {
+            animator.SetFloat(Strings.anim_float_AttackSpeed, Mathf.Sqrt(Player.instance.Data.AttackSpeed));
             animator.SetTrigger(Strings.animation_Attack);
             canAttack = false;
             attackCoolTime = 1f / Player.instance.Data.AttackSpeed;
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour, IUpdate
         if (IsSprint(h))
         {
             animator.SetBool(Strings.animation_Move, true);
-            animator.SetFloat(Strings.animation_MoveSpeed, Nums.sprintSpeed);
+            animator.SetFloat(Strings.anim_float_MoveSpeed, Nums.sprintSpeed);
             h *= Nums.sprintSpeed;
             if (restoreSp)
             {
@@ -80,7 +81,7 @@ public class PlayerController : MonoBehaviour, IUpdate
         }
         else
         {
-            animator.SetFloat(Strings.animation_MoveSpeed, 1f);
+            animator.SetFloat(Strings.anim_float_MoveSpeed, 1f);
             if (!restoreSp)
                 restoreSp_IE = StartCoroutine(RestoreStamina());
         }
@@ -125,7 +126,7 @@ public class PlayerController : MonoBehaviour, IUpdate
                 canJump2 = false;
             }
         }
-        animator.SetFloat(Strings.animation_VelocityY, rigid.velocity.y);
+        animator.SetFloat(Strings.anim_float_VelocityY, rigid.velocity.y);
     }
 
     public void SetCanJump(bool tf) => canJump = tf;
