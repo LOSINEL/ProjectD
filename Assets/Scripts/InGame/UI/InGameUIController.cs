@@ -16,6 +16,18 @@ public class InGameUIController : MonoBehaviour
         get { return _instance; }
     }
 
+    public bool IsInGameUIOpen{
+        get {
+            return _playerInformationUIController.IsPlayerInformationPopupOpen;
+        }
+    }
+
+    public bool IsInGameUIClosed {
+        get{
+            return !IsInGameUIOpen;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +37,7 @@ public class InGameUIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_gameSettingsController.Instance.IsGameSettingsWindowClosed)
+        if (IsInGameUIClosed)
         {
             if (Input.GetKeyDown(KeyCode.I))
             {
