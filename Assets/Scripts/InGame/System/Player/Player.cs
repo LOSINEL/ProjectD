@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] float nowSp;
     [SerializeField] bool isLiving = true;
     [SerializeField] MediKit mediKit;
+    [SerializeField] PlayerWeapon playerWeapon;
 
     public PlayerData Data { get { return data; } }
     public int NowHp { get { return nowHp; } }
@@ -117,6 +118,16 @@ public class Player : MonoBehaviour
         {
             nowSp += sp;
         }
+    }
+
+    public void ActivateWeapon()
+    {
+        playerWeapon.ActivateWeapon();
+    }
+
+    public void DeactivateWeapon()
+    {
+        playerWeapon.DeactivateWeapon();
     }
 
     [System.Serializable]

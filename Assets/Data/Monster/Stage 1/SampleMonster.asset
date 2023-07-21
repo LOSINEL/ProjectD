@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterName: sample monster
   damage: 10
-  maxHp: 100
+  maxHp: 25
+  defense: 0
   attackSpeed: 1
   moveSpeed: 1
   isGround: 1
