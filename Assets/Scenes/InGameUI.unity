@@ -318,7 +318,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 80, y: 25}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &21229634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -813,7 +813,7 @@ GameObject:
   - component: {fileID: 72795708}
   - component: {fileID: 72795707}
   m_Layer: 5
-  m_Name: ShopItemList_Epic_ItemSlotImage
+  m_Name: ShopItemList_Epic_ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -852,14 +852,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -915,7 +915,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 80, y: 25}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &81210218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2106,7 +2106,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2523,7 +2523,7 @@ GameObject:
   - component: {fileID: 414231887}
   - component: {fileID: 414231886}
   m_Layer: 5
-  m_Name: ShopItemList_Rare_ItemSlotImage
+  m_Name: ShopItemList_Rare_ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2562,14 +2562,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3075,7 +3075,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3423,6 +3423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 567449191}
   - component: {fileID: 567449192}
+  - component: {fileID: 567449193}
   m_Layer: 5
   m_Name: ShopItemList_Rare_ItemSlotList
   m_TagString: Untagged
@@ -3450,8 +3451,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -12.5}
+  m_SizeDelta: {x: 0, y: -25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &567449192
 MonoBehaviour:
@@ -3479,6 +3480,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &567449193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567449190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2832649f8fec42940a5d1aa8ca9de009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &586942787
 GameObject:
   m_ObjectHideFlags: 0
@@ -3806,7 +3819,7 @@ GameObject:
   - component: {fileID: 604912537}
   - component: {fileID: 604912536}
   m_Layer: 5
-  m_Name: ShopItemList_Rare_ItemSlotImage
+  m_Name: ShopItemList_Rare_ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3845,14 +3858,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4785,7 +4798,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5888,7 +5901,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5995,6 +6008,7 @@ GameObject:
   - component: {fileID: 985953585}
   - component: {fileID: 985953584}
   - component: {fileID: 985953586}
+  - component: {fileID: 985953587}
   m_Layer: 5
   m_Name: ShopItemList
   m_TagString: Untagged
@@ -6089,6 +6103,51 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &985953587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985953582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee41bb72ad1a25542ba0d75509987a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _normalItemSlotList: {fileID: 1463189851}
+  _rareItemSlotList: {fileID: 567449193}
+  _epicItemSlotList: {fileID: 1152084839}
+  _weaponList:
+  - {fileID: 11400000, guid: 6bae993952cc3824088cffdf4952309e, type: 2}
+  - {fileID: 11400000, guid: e16d5e8a8df027141a3e4675cd7c49ec, type: 2}
+  - {fileID: 11400000, guid: 138a6300de610404fbf77c287ca82e53, type: 2}
+  - {fileID: 11400000, guid: 58472effceac82e4aacf02e934f8b0ed, type: 2}
+  - {fileID: 11400000, guid: 3659640acab782744864a94b60039c67, type: 2}
+  - {fileID: 11400000, guid: 5b54c035a65bebb4fb10207062341c16, type: 2}
+  - {fileID: 11400000, guid: 6e0354a57495e174789fdc35e33b1539, type: 2}
+  - {fileID: 11400000, guid: ee72238b0ffdea649a374bd0915b132f, type: 2}
+  - {fileID: 11400000, guid: f7f76e73478c33a4aa4b1efeaf5a808f, type: 2}
+  _armorList:
+  - {fileID: 11400000, guid: 6e504f8ccf8d2454ca212991a4de9dba, type: 2}
+  - {fileID: 11400000, guid: bb65444c51cd2c54f90971f4bcec199b, type: 2}
+  - {fileID: 11400000, guid: b2b439f470ab4e4478c11c8b40068a4b, type: 2}
+  - {fileID: 11400000, guid: a6b9596893e6c4749a1de51cb49ec627, type: 2}
+  - {fileID: 11400000, guid: b8227cef14f88004782ebe87688dfa73, type: 2}
+  - {fileID: 11400000, guid: 57c628fb960137d419464865f0da5503, type: 2}
+  - {fileID: 11400000, guid: 089782a2078031841bf66be1c2719da2, type: 2}
+  - {fileID: 11400000, guid: df4f182e1d7ece24287884bc8b1f419f, type: 2}
+  - {fileID: 11400000, guid: d2d8de1b99d010b4595a51b36044c168, type: 2}
+  _accessoryList:
+  - {fileID: 11400000, guid: e32a45efb3c890d418880c18cc751193, type: 2}
+  - {fileID: 11400000, guid: 2bd22cc3533abd64da0e1272cc77a4f7, type: 2}
+  - {fileID: 11400000, guid: 1c0a1f134351ec24b97f9c0cf6be9ed6, type: 2}
+  - {fileID: 11400000, guid: 1dcac3ccc7196104fa917f13b9e0e195, type: 2}
+  - {fileID: 11400000, guid: 746cedf40781262448958593bdcf6894, type: 2}
+  - {fileID: 11400000, guid: 7075ecaa933eaab4ca7406fc64588401, type: 2}
+  - {fileID: 11400000, guid: 3ac2bab58d5da9847ab3750987c0ac0f, type: 2}
+  - {fileID: 11400000, guid: 84035b00005dbc440a4ace0053feaa9b, type: 2}
+  - {fileID: 11400000, guid: 00aa03a82cd38af409eaa245dcf6d173, type: 2}
 --- !u!1 &986126719
 GameObject:
   m_ObjectHideFlags: 0
@@ -6888,6 +6947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1152084837}
   - component: {fileID: 1152084838}
+  - component: {fileID: 1152084839}
   m_Layer: 5
   m_Name: ShopItemList_Epic_ItemSlotList
   m_TagString: Untagged
@@ -6915,8 +6975,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -12.5}
+  m_SizeDelta: {x: 0, y: -25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1152084838
 MonoBehaviour:
@@ -6944,6 +7004,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1152084839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152084836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2832649f8fec42940a5d1aa8ca9de009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1161832710
 GameObject:
   m_ObjectHideFlags: 0
@@ -7191,7 +7263,7 @@ GameObject:
   - component: {fileID: 1180536366}
   - component: {fileID: 1180536365}
   m_Layer: 5
-  m_Name: ShopItemList_Rare_ItemSlotImage
+  m_Name: ShopItemList_Rare_ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7230,14 +7302,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7896,7 +7968,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8462,7 +8534,7 @@ GameObject:
   - component: {fileID: 1426008599}
   - component: {fileID: 1426008598}
   m_Layer: 5
-  m_Name: ShopItemList_Epic_ItemSlotImage
+  m_Name: ShopItemList_Epic_ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8501,14 +8573,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8585,7 +8657,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -8609,7 +8681,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1430084239}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 985953587}
+        m_TargetAssemblyTypeName: ShopItemListController, Assembly-CSharp
+        m_MethodName: ShowArmorList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1430084239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8658,6 +8742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1463189849}
   - component: {fileID: 1463189850}
+  - component: {fileID: 1463189851}
   m_Layer: 5
   m_Name: ShopItemList_Normal_ItemSlotList
   m_TagString: Untagged
@@ -8714,6 +8799,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1463189851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463189848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2832649f8fec42940a5d1aa8ca9de009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1474316695
 GameObject:
   m_ObjectHideFlags: 0
@@ -9313,7 +9410,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9874,7 +9971,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -9898,7 +9995,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1546330063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 985953587}
+        m_TargetAssemblyTypeName: ShopItemListController, Assembly-CSharp
+        m_MethodName: ShowAccessoryList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1546330063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10829,7 +10938,7 @@ GameObject:
   - component: {fileID: 1681228165}
   - component: {fileID: 1681228164}
   m_Layer: 5
-  m_Name: ShopItemList_Epic_ItemSlotImage
+  m_Name: ShopItemList_Epic_ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10868,14 +10977,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10905,7 +11014,7 @@ GameObject:
   - component: {fileID: 1699118277}
   - component: {fileID: 1699118276}
   m_Layer: 5
-  m_Name: ShopItemList_Normal_ItemSlotImage
+  m_Name: ShopItemList_Normal_ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10944,14 +11053,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11260,7 +11369,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -11284,7 +11393,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1740149592}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 985953587}
+        m_TargetAssemblyTypeName: ShopItemListController, Assembly-CSharp
+        m_MethodName: ShowWeaponList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1740149592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11960,7 +12081,7 @@ GameObject:
   - component: {fileID: 1803805891}
   - component: {fileID: 1803805890}
   m_Layer: 5
-  m_Name: ShopItemList_Normal_ItemSlotImage
+  m_Name: ShopItemList_Normal_ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11999,14 +12120,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12954,7 +13075,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13178,7 +13299,7 @@ GameObject:
   - component: {fileID: 1986119741}
   - component: {fileID: 1986119740}
   m_Layer: 5
-  m_Name: ShopItemList_Normal_ItemSlotImage
+  m_Name: ShopItemList_Normal_ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13217,14 +13338,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13301,7 +13422,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13533,7 +13654,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d341a4dc5739e6e49a1948213010ce4c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
