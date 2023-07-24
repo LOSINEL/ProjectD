@@ -5,40 +5,29 @@ using UnityEngine.UI;
 
 public class ShopItemSlotList : MonoBehaviour
 {
-    private List<Image> _itemImageList;
+    [SerializeField]
+    private List<ShopItemSlot> _itemSlotList;
 
-    void Start()
+    public void Awake()
     {
-        FindAllItemImage();
+        FindAllItemSlot();
     }
 
-    private void FindAllItemImage()
+    private void FindAllItemSlot()
     {
-        _itemImageList = new();
-        Image[] images = GetComponentsInChildren<Image>();
-        foreach (Image image in images)
+        _itemSlotList = new();
+        ShopItemSlot[] slots = GetComponentsInChildren<ShopItemSlot>();
+        foreach(ShopItemSlot slot in slots)
         {
-            if (image.transform.parent != gameObject.transform)
-            {
-                _itemImageList.Add(image);
-            }
+            _itemSlotList.Add(slot);
         }
     }
 
     public void ShowItemList(List<EquipmentSO> itemList)
     {
-        for (int i = 0; i < itemList.Count; i++)
+        for (int i = 0; i < _itemSlotList.Count; i++)
         {
-            Sprite sprite = itemList[i].ItemSprite;
-            if(sprite == null) 
-            {
-                _itemImageList[i].enabled = false;
-            }
-            else 
-            {
-                _itemImageList[i].enabled = true;
-                _itemImageList[i].sprite = sprite;
-            }
+            _itemSlotList[i].SetSlotImage(itemList[i]);
         }
     }
 }

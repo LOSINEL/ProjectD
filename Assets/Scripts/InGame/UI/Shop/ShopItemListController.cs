@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 using ITEM_TYPE = Enums.ITEM_TYPE;
 using ITEM_GRADE = Enums.ITEM_GRADE;
@@ -9,17 +8,10 @@ using ITEM_GRADE = Enums.ITEM_GRADE;
 public class ShopItemListController : MonoBehaviour
 {
     private Dictionary<ITEM_TYPE, Dictionary<ITEM_GRADE, List<EquipmentSO>>> _shopItemDatabase;
-    private List<EquipmentSO> _shopItemList;
-    private const string _weaponItemPath = "/Assets/Data/Item/Equipment/Weapon/";
-    private const string _armorItemPath = "/Assets/Data/Item/Equipment/Armor/";
-    private const string _accessoryItemPath = "/Assets/Data/Item/Equipment/Accessory/";
-
     [SerializeField]
     private ShopItemSlotList _normalItemSlotList;
-
     [SerializeField]
     private ShopItemSlotList _rareItemSlotList;
-
     [SerializeField]
     private ShopItemSlotList _epicItemSlotList;
     [SerializeField]
@@ -31,11 +23,14 @@ public class ShopItemListController : MonoBehaviour
 
     void Start()
     {
-        LoadShopItemList();
+        CreateDatabaseStructure();
+        AddItemsIntoDatabase();
+
+        // show weapon list by default.
         ShowWeaponList();
     }
 
-    private void LoadShopItemList()
+    private void CreateDatabaseStructure()
     {
         Array itemTypeArray = ITEM_TYPE.GetValues(typeof(ITEM_TYPE));
         Array itemGradeArray = ITEM_GRADE.GetValues(typeof(ITEM_GRADE));
@@ -50,10 +45,16 @@ public class ShopItemListController : MonoBehaviour
         {
             foreach (ITEM_GRADE itemGrade in itemGradeArray)
             {
+                if(itemGrade == ITEM_GRADE.LEGENDARY)
+                    break;
+
                 _shopItemDatabase[itemType].Add(itemGrade, new List<EquipmentSO>());
             }
         }
+    }
 
+    private void AddItemsIntoDatabase()
+    {
         // add items into database.
         foreach (EquipmentSO weapon in _weaponList)
         {

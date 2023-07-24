@@ -6,6 +6,8 @@ public class ShopUIController : MonoBehaviour
 {
     [SerializeField]
     private GameObject _shopPopup;
+    [SerializeField]
+    private GameObject _shopPurchaseConfirmPopup;
     private bool _isShopPopupUIOpen;
     public bool IsShopPopupUIOpen {
         get {
@@ -19,5 +21,6 @@ public class ShopUIController : MonoBehaviour
 
     public void CloseShopPopupUI() {
         _shopPopup.SetActive(false);
+        _shopPurchaseConfirmPopup.SetActive(false);
     }
 }
