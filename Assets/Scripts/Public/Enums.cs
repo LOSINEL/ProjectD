@@ -6,4 +6,5 @@ public static class Enums
     public enum ITEM_GRADE { NORMAL, RARE, EPIC, LEGENDARY }
     public enum MONSTER_TYPE { NORMAL, MBOSS, SPECIAL, BOSS }
     public enum UI_TYPE { INVENTORY, SHOP, HEAL, MAP, OPTION }
+    public enum EFFECT_TYPE { WEAPON }
 }

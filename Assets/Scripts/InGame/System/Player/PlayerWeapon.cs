@@ -33,7 +33,7 @@ public class PlayerWeapon : MonoBehaviour
         if (other.CompareTag(Strings.tag_Monster))
         {
             other.GetComponent<Monster>().GetDamaged(Player.instance.Data.Damage);
-            Instantiate(particle, other.transform.position, Quaternion.identity);
+            EffectManager.instance.PlayEffect(Enums.EFFECT_TYPE.WEAPON, other.transform.position);
         }
     }
 }

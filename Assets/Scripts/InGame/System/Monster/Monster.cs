@@ -16,12 +16,6 @@ public class Monster : MonoBehaviour
         nowHp = monsterData.MaxHp;
     }
 
-    protected void MoveToPlayer()
-    {
-        Vector3 tmpDir = Player.instance.transform.position - transform.position;
-        transform.Translate(tmpDir.normalized * Time.deltaTime * monsterData.MoveSpeed);
-    }
-
     public void CheckEnemy()
     {
         enemyCheck = true;
@@ -29,6 +23,7 @@ public class Monster : MonoBehaviour
 
     public void GetDamaged(int damage)
     {
+        CheckEnemy();
         int tmpDmg = damage - monsterData.Defense;
         if (tmpDmg < 0) tmpDmg = 0;
         if (nowHp - tmpDmg <= 0)
