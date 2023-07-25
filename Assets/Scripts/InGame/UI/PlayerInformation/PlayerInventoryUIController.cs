@@ -6,11 +6,11 @@ public class PlayerInventoryUIController : MonoBehaviour
 {
     private void Start()
     {
-        IInventoryObserver[] _inventoryObservers = GetComponentsInChildren<IInventoryObserver>();
+        IInventoryObserver[] inventoryObservers = GetComponentsInChildren<IInventoryObserver>();
 
-        foreach (IInventoryObserver _itemSlot in _inventoryObservers)
+        foreach (IInventoryObserver observer in inventoryObservers)
         {
-            _itemSlot.Initialize(InventoryManager.Instance);
+            observer.Initialize(InventoryManager.Instance);
         }
     }
 }

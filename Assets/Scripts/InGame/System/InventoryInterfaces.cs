@@ -24,7 +24,6 @@ namespace Assets.Scripts.InGame.System
     public interface IEquipmentObserver : IObserver
     {
         public abstract void Initialize(IEquipmentSubject subject);
-        public abstract Enums.ITEM_TYPE GetEquipmentType();
     }
 
     public interface IItemSlot

@@ -6,68 +6,14 @@ using UnityEngine.EventSystems;
 
 using Assets.Scripts.InGame.System;
 
-public class EquipmentItemSlot :
-    MonoBehaviour,
-    IPointerDownHandler,
-    IEquipmentObserver,
-    IEquipmentSlot
+public class EquipmentItemSlot : IEquipmentSlot
 {
-    [SerializeField]
-    private Sprite _slotImage;
-    private Image _itemImage;
-    private IEquipmentSubject _equipmentSubject;
-    [SerializeField]
     private Enums.ITEM_TYPE _equipmentType;
-    [SerializeField]
-    private InventoryItemSlotDragHandler _itemSlotDragHandler;
+    private EquipmentSO _equipment;
 
-    void Start()
+    public EquipmentItemSlot(Enums.ITEM_TYPE equipmentType)
     {
-        _itemImage = GetComponent<Image>();
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (_itemSlotDragHandler.IsDraggable && !IsEmpty())
-        {
-            _itemSlotDragHandler.StartDrag(this);
-        }
-    }
-
-    public void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject == _itemSlotDragHandler.gameObject)
-        {
-            if (Input.GetMouseButtonUp(0))
-            {
-                InventoryManager.Instance.SwapItem(
-                   _itemSlotDragHandler.DragTargetItemSlot,
-                   this);
-            }
-        }
-    }
-
-    public void Initialize(IEquipmentSubject subject)
-    {
-        _equipmentSubject = subject;
-        _equipmentSubject.AddObserver(this);
-
-        InventoryManager.Instance.AddEquipmentSlot(this);
-    }
-
-    public void UpdateObserver()
-    {
-        ItemSO item = _equipmentSubject.GetState(this);
-
-        if (item == null)
-        {
-            _itemImage.enabled = false;
-        }
-        else
-        {
-            _itemImage.sprite = item.ItemSprite;
-            _itemImage.enabled = true;
-        }
+        _equipmentType = equipmentType;
     }
 
     public Enums.ITEM_TYPE GetEquipmentType()
@@ -77,17 +23,16 @@ public class EquipmentItemSlot :
 
     public ItemSO GetItem()
     {
-        return _equipmentSubject.GetState(this);
+        return _equipment;
     }
 
     public void SetItem(ItemSO item)
     {
-        InventoryManager.Instance.SetEquipmentToSlot((EquipmentSO)item, this);
+        _equipment = (EquipmentSO)item;
     }
 
     public bool IsEmpty()
     {
-        return GetItem() == null;
+        return _equipment == null;
     }
 }
-

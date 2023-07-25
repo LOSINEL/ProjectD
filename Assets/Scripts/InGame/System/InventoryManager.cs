@@ -6,26 +6,15 @@ using Assets.Scripts.InGame.System;
 
 class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 {
+
     private static InventoryManager _instance;
     public static InventoryManager Instance
     {
         get { return _instance; }
     }
 
-    [SerializeField]
-    private ItemSO _testItem;
-
-    [SerializeField]
-    private List<ItemSO> _inventory;
-    private List<IItemSlot> _inventorySlotList;
-    private List<IInventoryObserver> _inventoryObserverList;
-    private Dictionary<Enums.ITEM_TYPE, EquipmentSO> _equipments;
-    private List<IEquipmentSlot> _equipmentSlotList;
-    private List<IEquipmentObserver> _equipmentObserverList;
-
-    // �̷��� �ٲٱ�
-    private List<(ItemSO, IInventoryObserver, IItemSlot)> _itemList;
-    private List<(EquipmentSO, IEquipmentObserver, IItemSlot)> _equipmentList;
+    private List<(IInventoryObserver, IItemSlot)> _itemList;
+    private List<(IEquipmentObserver, IEquipmentSlot)> _equipmentList;
 
     private void Awake()
     {
@@ -33,152 +22,133 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
         Initialize();
     }
 
-    void Update()
-    {
-        // TODO
-        // This anti pattern should be deleted.
-        Notify();
-    }
-
     private void Initialize()
     {
-        _inventory = new();
-        _equipments = new();
-        _inventoryObserverList = new();
-        _equipmentObserverList = new();
-        _inventorySlotList = new();
-        _equipmentSlotList = new();
+        
+        _itemList = new();
+        _equipmentList = new();
+        AddItemSlot(Nums.maxInventoryItemSlotCount);
+        AddEquipmentSlot(Enums.ITEM_TYPE.WEAPON);
+        AddEquipmentSlot(Enums.ITEM_TYPE.ARMOR);
+        AddEquipmentSlot(Enums.ITEM_TYPE.ACCESSORY);
+    }
+
+    public void AddItemSlot(int count)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            _itemList.Add((null, new InventoryItemSlot()));
+        }
+    }
+
+    public void AddEquipmentSlot(Enums.ITEM_TYPE itemType)
+    {
+        _equipmentList.Add((null, new EquipmentItemSlot(itemType)));
     }
 
     /********** Implements of IInventorySubject **********/
 
     public void AddObserver(IInventoryObserver observer)
     {
-        if (_inventoryObserverList.Contains(observer))
-            return;
-
-        _inventoryObserverList.Add(observer);
-        _inventory.Add(null);
+        // find tuple what has null IInventoryObserver.
+        for(int i = 0; i < _itemList.Count; i++)
+        {
+            if (_itemList[i].Item1 == null)
+            {
+                // Item in tuple cannot be changed.
+                // so assign new tuple with current one.
+                _itemList[i] = (observer, _itemList[i].Item2);
+                _itemList[i].Item1.UpdateObserver();
+                break;
+            }
+        }
     }
 
     public void RemoveObserver(IInventoryObserver observer)
     {
-        int index = _inventoryObserverList.IndexOf(observer);
-        if (index == -1)
-            return;
-
-        _inventoryObserverList.RemoveAt(index);
-        _inventory.RemoveAt(index);
-    }
-
-    public void Notify()
-    {
-        foreach (IInventoryObserver observer in _inventoryObserverList)
+        for(int i = 0; i < _itemList.Count; i++)
         {
-            observer.UpdateObserver();
-        }
-        foreach (IEquipmentObserver observer in _equipmentObserverList)
-        {
-            observer.UpdateObserver();
+            if(_itemList[i].Item1 == observer)
+            {
+                _itemList.RemoveAt(i);
+                return;
+            }
         }
     }
 
     public ItemSO GetState(IInventoryObserver observer)
     {
-        int index = _inventoryObserverList.IndexOf(observer);
-
-        if (index == -1)
-            return null;
-        return _inventory[index];
+        foreach((IInventoryObserver, IItemSlot) tuple in _itemList)
+        {
+            if(tuple.Item1 == observer)
+            {
+                return tuple.Item2.GetItem();
+            }
+        }
+        return null;
     }
 
     /********** Implements of IEquipmentSubject **********/
 
     public void AddObserver(IEquipmentObserver observer)
     {
-        if (_equipmentObserverList.Contains(observer))
-            return;
-
-        _equipmentObserverList.Add(observer);
-        _equipments.Add(observer.GetEquipmentType(), null);
+        // find tuple what has null IEquipmentObserver.
+        for(int i = 0; i < _equipmentList.Count; i++)
+        {
+            if (_equipmentList[i].Item1 == null)
+            {
+                // Item in tuple cannot be changed.
+                // so assign new tuple with current one.
+                _equipmentList[i] = (observer, _equipmentList[i].Item2);
+                _equipmentList[i].Item1.UpdateObserver();
+                break;
+            }
+        }
     }
 
     public void RemoveObserver(IEquipmentObserver observer)
     {
-        int index = _equipmentObserverList.IndexOf(observer);
-        if (index == -1)
-            return;
-
-        _equipmentObserverList.RemoveAt(index);
-        _equipments.Remove(observer.GetEquipmentType());
+        for(int i = 0; i < _equipmentList.Count; i++)
+        {
+            if(_equipmentList[i].Item1 == observer)
+            {
+                _equipmentList.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     public EquipmentSO GetState(IEquipmentObserver observer)
     {
-        int index = _equipmentObserverList.IndexOf(observer);
+        foreach((IEquipmentObserver, IItemSlot) tuple in _equipmentList)
+        {
+            if(tuple.Item1 == observer)
+            {
+                return (EquipmentSO)tuple.Item2.GetItem();
+            }
+        }
+        return null;
+    }
 
-        if (index == -1)
-            return null;
-        return _equipments[observer.GetEquipmentType()];
+    public void Notify()
+    {
+        foreach((IInventoryObserver, IItemSlot) tuple in _itemList)
+        {
+            if(tuple.Item1 != null)
+            {
+                tuple.Item1.UpdateObserver();
+            }
+        }
+        foreach((IEquipmentObserver, IItemSlot) tuple in _equipmentList)
+        {
+            if(tuple.Item1 != null)
+            {
+                tuple.Item1.UpdateObserver();
+            }
+        }
     }
 
     /********** Implements of InventoryManager **********/
-
-    public void AddItemSlot(IItemSlot itemSlot)
-    {
-        _inventorySlotList.Add(itemSlot);
-    }
-
-    public void RemoveItemSlot(IItemSlot itemSlot)
-    {
-        int index = _inventorySlotList.IndexOf(itemSlot);
-        if (index == -1)
-            return;
-
-        _inventorySlotList.RemoveAt(index);
-        _inventory.RemoveAt(index);
-    }
-
-    public void AddEquipmentSlot(IEquipmentSlot equipmentSlot)
-    {
-        if (_equipmentSlotList.Contains(equipmentSlot))
-            return;
-
-        _equipmentSlotList.Add(equipmentSlot);
-    }
-
-    public void RemoveEquipmentSlot(IEquipmentSlot equipmentSlot)
-    {
-        int index = _equipmentSlotList.IndexOf(equipmentSlot);
-        if (index == -1)
-            return;
-
-        _equipmentSlotList.RemoveAt(index);
-    }
-
-    public void AddItem(ItemSO item)
-    {
-        int index = FindEmptySlotIndex();
-        if (index == -1)
-            return; // inventory is full.
-
-        _inventory[index] = item;
-
-        Notify();
-    }
-
-    private int FindEmptySlotIndex()
-    {
-        int index;
-        for (index = 0; index < _inventorySlotList.Count; index++)
-        {
-            if (_inventorySlotList[index].IsEmpty())
-            {
-                return index;
-            }
-        }
-        return -1;
-    }
 
     public void SwapItem(IItemSlot itemSlotA, IItemSlot itemSlotB)
     {
@@ -225,28 +195,33 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
         Notify();
     }
 
-    public void SetItemToSlot(ItemSO item, IItemSlot itemSlot)
+    public void AddItem(ItemSO item)
     {
-        int index = _inventorySlotList.IndexOf(itemSlot);
-        if (index == -1)
+        IItemSlot itemSlot = GetEmptyInventorySlot();
+        if (itemSlot == null)
             return;
 
-        _inventory[index] = item;
+        itemSlot.SetItem(item);
+
+        Notify();
     }
 
-    public void SetEquipmentToSlot(EquipmentSO equipment, IEquipmentSlot equipmentSlot)
+    public IItemSlot GetEmptyInventorySlot()
     {
-        if (!_equipmentSlotList.Contains(equipmentSlot))
-            return;
-
-        _equipments[equipmentSlot.GetEquipmentType()] = equipment;
+        foreach((IInventoryObserver, IItemSlot) tuple in _itemList)
+        {
+            if (tuple.Item2.IsEmpty()){
+                return tuple.Item2;
+            }
+        }
+        return null;
     }
 
     public bool IsInventoryFull()
     {
-        foreach (IItemSlot itemSlot in _inventorySlotList)
+        foreach((IInventoryObserver, IItemSlot) tuple in _itemList)
         {
-            if (itemSlot.IsEmpty())
+            if(tuple.Item2.IsEmpty())
             {
                 return false;
             }
