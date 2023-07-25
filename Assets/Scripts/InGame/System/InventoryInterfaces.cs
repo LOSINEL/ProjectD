@@ -1,6 +1,7 @@
 
 namespace Assets.Scripts.InGame.System
 {
+
     public interface IObserver
     {
         public abstract void UpdateObserver();
@@ -25,8 +26,6 @@ namespace Assets.Scripts.InGame.System
     {
         public abstract void Initialize(IEquipmentSubject subject);
     }
-
-    public interface IItemSlotObserver : IObserver { }
 
     public interface IItemSlot
     {

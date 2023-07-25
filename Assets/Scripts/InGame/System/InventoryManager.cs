@@ -4,17 +4,40 @@ using UnityEngine;
 
 using Assets.Scripts.InGame.System;
 
+struct ItemSlotObserverPair
+{
+    public IInventoryObserver observer;
+    public IItemSlot itemSlot;
+
+    public ItemSlotObserverPair(IInventoryObserver observer, IItemSlot itemSlot)
+    {
+        this.observer = observer;
+        this.itemSlot = itemSlot;
+    }
+}
+
+struct EquipmentSlotObserverPair
+{
+    public IEquipmentObserver observer;
+    public IEquipmentSlot equipmentSlot;
+
+    public EquipmentSlotObserverPair(IEquipmentObserver observer, IEquipmentSlot equipmentSlot)
+    {
+        this.observer = observer;
+        this.equipmentSlot = equipmentSlot;
+    }
+}
+
 class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 {
-
     private static InventoryManager _instance;
     public static InventoryManager Instance
     {
         get { return _instance; }
     }
 
-    private List<(IInventoryObserver, IItemSlot)> _itemList;
-    private List<(IEquipmentObserver, IEquipmentSlot)> _equipmentList;
+    private List<ItemSlotObserverPair> _inventory;
+    private List<EquipmentSlotObserverPair> _equipments;
 
     private void Awake()
     {
@@ -24,9 +47,8 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     private void Initialize()
     {
-        
-        _itemList = new();
-        _equipmentList = new();
+        _inventory = new();
+        _equipments = new();
         AddItemSlot(Nums.maxInventoryItemSlotCount);
         AddEquipmentSlot(Enums.ITEM_TYPE.WEAPON);
         AddEquipmentSlot(Enums.ITEM_TYPE.ARMOR);
@@ -35,30 +57,36 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     public void AddItemSlot(int count)
     {
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
-            _itemList.Add((null, new InventoryItemSlot()));
+            _inventory.Add(new ItemSlotObserverPair(null, new InventoryItemSlot()));
         }
     }
 
     public void AddEquipmentSlot(Enums.ITEM_TYPE itemType)
     {
-        _equipmentList.Add((null, new EquipmentItemSlot(itemType)));
+        _equipments.Add(
+            new EquipmentSlotObserverPair(
+                null, new EquipmentItemSlot(itemType)
+            ));
     }
 
     /********** Implements of IInventorySubject **********/
 
     public void AddObserver(IInventoryObserver observer)
     {
-        // find tuple what has null IInventoryObserver.
-        for(int i = 0; i < _itemList.Count; i++)
+        // find pair what has null IInventoryObserver.
+        for (int i = 0; i < _inventory.Count; i++)
         {
-            if (_itemList[i].Item1 == null)
+            if (_inventory[i].observer == null)
             {
-                // Item in tuple cannot be changed.
-                // so assign new tuple with current one.
-                _itemList[i] = (observer, _itemList[i].Item2);
-                _itemList[i].Item1.UpdateObserver();
+                // Item in list cannot be changed.
+                // so assign copy of original which is modified instead modify directly.
+                ItemSlotObserverPair pair = _inventory[i];
+                pair.observer = observer;
+                _inventory[i] = pair;
+
+                _inventory[i].observer.UpdateObserver();
                 break;
             }
         }
@@ -66,11 +94,11 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     public void RemoveObserver(IInventoryObserver observer)
     {
-        for(int i = 0; i < _itemList.Count; i++)
+        for (int i = 0; i < _inventory.Count; i++)
         {
-            if(_itemList[i].Item1 == observer)
+            if (_inventory[i].observer == observer)
             {
-                _itemList.RemoveAt(i);
+                _inventory.RemoveAt(i);
                 return;
             }
         }
@@ -78,11 +106,11 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     public IItemSlot GetState(IInventoryObserver observer)
     {
-        foreach((IInventoryObserver, IItemSlot) tuple in _itemList)
+        foreach (ItemSlotObserverPair pair in _inventory)
         {
-            if(tuple.Item1 == observer)
+            if (pair.observer == observer)
             {
-                return tuple.Item2;
+                return pair.itemSlot;
             }
         }
         return null;
@@ -92,15 +120,18 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     public void AddObserver(IEquipmentObserver observer)
     {
-        // find tuple what has null IEquipmentObserver.
-        for(int i = 0; i < _equipmentList.Count; i++)
+        // find pair what has null IEquipmentObserver.
+        for (int i = 0; i < _equipments.Count; i++)
         {
-            if (_equipmentList[i].Item1 == null)
+            if (_equipments[i].observer == null)
             {
-                // Item in tuple cannot be changed.
-                // so assign new tuple with current one.
-                _equipmentList[i] = (observer, _equipmentList[i].Item2);
-                _equipmentList[i].Item1.UpdateObserver();
+                // Item in list cannot be changed.
+                // so assign copy of original which is modified instead modify directly.
+                EquipmentSlotObserverPair pair = _equipments[i];
+                pair.observer = observer;
+                _equipments[i] = pair;
+
+                _equipments[i].observer.UpdateObserver();
                 break;
             }
         }
@@ -108,11 +139,11 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     public void RemoveObserver(IEquipmentObserver observer)
     {
-        for(int i = 0; i < _equipmentList.Count; i++)
+        for (int i = 0; i < _equipments.Count; i++)
         {
-            if(_equipmentList[i].Item1 == observer)
+            if (_equipments[i].observer == observer)
             {
-                _equipmentList.RemoveAt(i);
+                _equipments.RemoveAt(i);
                 return;
             }
         }
@@ -120,11 +151,11 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     public IEquipmentSlot GetState(IEquipmentObserver observer)
     {
-        foreach((IEquipmentObserver, IEquipmentSlot) tuple in _equipmentList)
+        foreach (EquipmentSlotObserverPair pair in _equipments)
         {
-            if(tuple.Item1 == observer)
+            if (pair.observer == observer)
             {
-                return tuple.Item2;
+                return pair.equipmentSlot;
             }
         }
         return null;
@@ -132,18 +163,18 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     public void Notify()
     {
-        foreach((IInventoryObserver, IItemSlot) tuple in _itemList)
+        foreach (ItemSlotObserverPair pair in _inventory)
         {
-            if(tuple.Item1 != null)
+            if (pair.observer != null)
             {
-                tuple.Item1.UpdateObserver();
+                pair.observer.UpdateObserver();
             }
         }
-        foreach((IEquipmentObserver, IItemSlot) tuple in _equipmentList)
+        foreach (EquipmentSlotObserverPair pair in _equipments)
         {
-            if(tuple.Item1 != null)
+            if (pair.observer != null)
             {
-                tuple.Item1.UpdateObserver();
+                pair.observer.UpdateObserver();
             }
         }
     }
@@ -208,10 +239,11 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     public IItemSlot GetEmptyInventorySlot()
     {
-        foreach((IInventoryObserver, IItemSlot) tuple in _itemList)
+        foreach (ItemSlotObserverPair pair in _inventory)
         {
-            if (tuple.Item2.IsEmpty()){
-                return tuple.Item2;
+            if (pair.itemSlot.IsEmpty())
+            {
+                return pair.itemSlot;
             }
         }
         return null;
@@ -219,9 +251,9 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     public bool IsInventoryFull()
     {
-        foreach((IInventoryObserver, IItemSlot) tuple in _itemList)
+        foreach (ItemSlotObserverPair pair in _inventory)
         {
-            if(tuple.Item2.IsEmpty())
+            if (pair.itemSlot.IsEmpty())
             {
                 return false;
             }
