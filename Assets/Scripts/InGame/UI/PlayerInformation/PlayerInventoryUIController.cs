@@ -10,7 +10,7 @@ public class PlayerInventoryUIController : MonoBehaviour
 
         foreach (IInventoryObserver _itemSlot in _inventoryObservers)
         {
-            _itemSlot.Initialize(InventoryManager.instance);
+            _itemSlot.Initialize(InventoryManager.Instance);
         }
     }
 }

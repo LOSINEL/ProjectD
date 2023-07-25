@@ -32,7 +32,7 @@ public class InventoryItemSlot : MonoBehaviour, IPointerDownHandler, IInventoryO
         {
             if (Input.GetMouseButtonUp(0))
             {
-                InventoryManager.instance.SwapItem(_itemSlotDragHandler.DragTargetItemSlot, this);
+                InventoryManager.Instance.SwapItem(_itemSlotDragHandler.DragTargetItemSlot, this);
             }
         }
     }
@@ -42,7 +42,7 @@ public class InventoryItemSlot : MonoBehaviour, IPointerDownHandler, IInventoryO
         _inventorySubject = subject;
         _inventorySubject.AddObserver(this);
 
-        InventoryManager.instance.AddItemSlot(this);
+        InventoryManager.Instance.AddItemSlot(this);
     }
 
     public void UpdateObserver()
@@ -67,7 +67,7 @@ public class InventoryItemSlot : MonoBehaviour, IPointerDownHandler, IInventoryO
 
     public void SetItem(ItemSO item)
     {
-        InventoryManager.instance.SetItemToSlot(item, this);
+        InventoryManager.Instance.SetItemToSlot(item, this);
     }
 
     public bool IsEmpty()

@@ -13,7 +13,7 @@ public class PlayerEquipmentUIController : MonoBehaviour
 
         foreach (IEquipmentObserver observer in _equipmentObservers)
         {
-            observer.Initialize(InventoryManager.instance);
+            observer.Initialize(InventoryManager.Instance);
         }
     }
 }

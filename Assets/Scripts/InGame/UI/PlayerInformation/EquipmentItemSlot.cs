@@ -40,7 +40,7 @@ public class EquipmentItemSlot :
         {
             if (Input.GetMouseButtonUp(0))
             {
-                InventoryManager.instance.SwapItem(
+                InventoryManager.Instance.SwapItem(
                    _itemSlotDragHandler.DragTargetItemSlot,
                    this);
             }
@@ -52,7 +52,7 @@ public class EquipmentItemSlot :
         _equipmentSubject = subject;
         _equipmentSubject.AddObserver(this);
 
-        InventoryManager.instance.AddEquipmentSlot(this);
+        InventoryManager.Instance.AddEquipmentSlot(this);
     }
 
     public void UpdateObserver()
@@ -82,7 +82,7 @@ public class EquipmentItemSlot :
 
     public void SetItem(ItemSO item)
     {
-        InventoryManager.instance.SetEquipmentToSlot((EquipmentSO)item, this);
+        InventoryManager.Instance.SetEquipmentToSlot((EquipmentSO)item, this);
     }
 
     public bool IsEmpty()

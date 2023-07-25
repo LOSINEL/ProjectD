@@ -4,17 +4,17 @@ using UnityEngine;
 
 using Assets.Scripts.InGame.System;
 
-class InventoryManager :
-    MonoBehaviour,
-    IInventorySubject,
-    IEquipmentSubject
+class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 {
-    public static InventoryManager instance;
+    private static InventoryManager _instance;
+    public static InventoryManager Instance
+    {
+        get { return _instance; }
+    }
 
     [SerializeField]
-    private ItemSO _nullItem;
-    [SerializeField]
     private ItemSO _testItem;
+
     [SerializeField]
     private List<ItemSO> _inventory;
     private List<IItemSlot> _inventorySlotList;
@@ -23,24 +23,21 @@ class InventoryManager :
     private List<IEquipmentSlot> _equipmentSlotList;
     private List<IEquipmentObserver> _equipmentObserverList;
 
-    // ÀÌ·¸°Ô ¹Ù²Ù±â
+    // ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½
     private List<(ItemSO, IInventoryObserver, IItemSlot)> _itemList;
     private List<(EquipmentSO, IEquipmentObserver, IItemSlot)> _equipmentList;
 
     private void Awake()
     {
-        instance = this;
+        _instance = this;
         Initialize();
     }
 
     void Update()
     {
-        // for test
+        // TODO
+        // This anti pattern should be deleted.
         Notify();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            AddItem(_testItem);
-        }
     }
 
     private void Initialize()
@@ -57,7 +54,8 @@ class InventoryManager :
 
     public void AddObserver(IInventoryObserver observer)
     {
-        if (_inventoryObserverList.Contains(observer)) return;
+        if (_inventoryObserverList.Contains(observer))
+            return;
 
         _inventoryObserverList.Add(observer);
         _inventory.Add(null);
@@ -66,7 +64,8 @@ class InventoryManager :
     public void RemoveObserver(IInventoryObserver observer)
     {
         int index = _inventoryObserverList.IndexOf(observer);
-        if (index == -1) return;
+        if (index == -1)
+            return;
 
         _inventoryObserverList.RemoveAt(index);
         _inventory.RemoveAt(index);
@@ -88,7 +87,8 @@ class InventoryManager :
     {
         int index = _inventoryObserverList.IndexOf(observer);
 
-        if (index == -1) return null;
+        if (index == -1)
+            return null;
         return _inventory[index];
     }
 
@@ -96,7 +96,8 @@ class InventoryManager :
 
     public void AddObserver(IEquipmentObserver observer)
     {
-        if (_equipmentObserverList.Contains(observer)) return;
+        if (_equipmentObserverList.Contains(observer))
+            return;
 
         _equipmentObserverList.Add(observer);
         _equipments.Add(observer.GetEquipmentType(), null);
@@ -105,7 +106,8 @@ class InventoryManager :
     public void RemoveObserver(IEquipmentObserver observer)
     {
         int index = _equipmentObserverList.IndexOf(observer);
-        if (index == -1) return;
+        if (index == -1)
+            return;
 
         _equipmentObserverList.RemoveAt(index);
         _equipments.Remove(observer.GetEquipmentType());
@@ -115,7 +117,8 @@ class InventoryManager :
     {
         int index = _equipmentObserverList.IndexOf(observer);
 
-        if (index == -1) return null;
+        if (index == -1)
+            return null;
         return _equipments[observer.GetEquipmentType()];
     }
 
@@ -129,7 +132,8 @@ class InventoryManager :
     public void RemoveItemSlot(IItemSlot itemSlot)
     {
         int index = _inventorySlotList.IndexOf(itemSlot);
-        if (index == -1) return;
+        if (index == -1)
+            return;
 
         _inventorySlotList.RemoveAt(index);
         _inventory.RemoveAt(index);
@@ -137,7 +141,8 @@ class InventoryManager :
 
     public void AddEquipmentSlot(IEquipmentSlot equipmentSlot)
     {
-        if (_equipmentSlotList.Contains(equipmentSlot)) return;
+        if (_equipmentSlotList.Contains(equipmentSlot))
+            return;
 
         _equipmentSlotList.Add(equipmentSlot);
     }
@@ -145,7 +150,8 @@ class InventoryManager :
     public void RemoveEquipmentSlot(IEquipmentSlot equipmentSlot)
     {
         int index = _equipmentSlotList.IndexOf(equipmentSlot);
-        if (index == -1) return;
+        if (index == -1)
+            return;
 
         _equipmentSlotList.RemoveAt(index);
     }
@@ -153,9 +159,12 @@ class InventoryManager :
     public void AddItem(ItemSO item)
     {
         int index = FindEmptySlotIndex();
-        if (index == -1) return; // inventory is full.
+        if (index == -1)
+            return; // inventory is full.
 
         _inventory[index] = item;
+
+        Notify();
     }
 
     private int FindEmptySlotIndex()
@@ -182,36 +191,36 @@ class InventoryManager :
          */
         ItemSO itemA = itemSlotA.GetItem();
         ItemSO itemB = itemSlotB.GetItem();
-        if(itemSlotB is IEquipmentSlot)
+        if (itemSlotB is IEquipmentSlot)
         {
-            // inventory to equipment 
+            // inventory to equipment
             // equipment to inventory
             // need to check type
             if (itemB != null)
             {
-                if (itemA.ItemType != itemB.ItemType) return;
+                if (itemA.ItemType != itemB.ItemType)
+                    return;
             }
             else
             {
-                if (itemA.ItemType != ((IEquipmentSlot)itemSlotB).GetEquipmentType()) return;
+                if (itemA.ItemType != ((IEquipmentSlot)itemSlotB).GetEquipmentType())
+                    return;
             }
         }
-        else if(itemSlotA is IEquipmentSlot)
+        else if (itemSlotA is IEquipmentSlot)
         {
             // equipment to inventory
             // need to check type if inventory item is not null.
             if (itemB != null)
             {
-                if (itemA.ItemType != itemB.ItemType) return;
+                if (itemA.ItemType != itemB.ItemType)
+                    return;
             }
         }
-        else
-        {
-        }
+        else { }
         ItemSO item = itemSlotA.GetItem();
         itemSlotA.SetItem(itemSlotB.GetItem());
         itemSlotB.SetItem(item);
-
 
         Notify();
     }
@@ -219,15 +228,29 @@ class InventoryManager :
     public void SetItemToSlot(ItemSO item, IItemSlot itemSlot)
     {
         int index = _inventorySlotList.IndexOf(itemSlot);
-        if (index == -1) return;
+        if (index == -1)
+            return;
 
         _inventory[index] = item;
     }
 
     public void SetEquipmentToSlot(EquipmentSO equipment, IEquipmentSlot equipmentSlot)
     {
-        if (!_equipmentSlotList.Contains(equipmentSlot)) return;
+        if (!_equipmentSlotList.Contains(equipmentSlot))
+            return;
 
         _equipments[equipmentSlot.GetEquipmentType()] = equipment;
+    }
+
+    public bool IsInventoryFull()
+    {
+        foreach (IItemSlot itemSlot in _inventorySlotList)
+        {
+            if (itemSlot.IsEmpty())
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
