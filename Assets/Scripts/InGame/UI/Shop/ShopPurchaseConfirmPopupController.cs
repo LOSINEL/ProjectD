@@ -67,6 +67,7 @@ public class ShopPurchaseConfirmPopupController : MonoBehaviour
         }
 
         // add item to inventory.
+        InventoryManager.Instance.MinusGold(_cost);
         InventoryManager.Instance.AddItem(_selectedItem);
         // TODO
         // pay money for item.

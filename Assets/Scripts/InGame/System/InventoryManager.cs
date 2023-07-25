@@ -38,6 +38,13 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     private List<ItemSlotObserverPair> _inventory;
     private List<EquipmentSlotObserverPair> _equipments;
+    [SerializeField]
+    private int _gold;
+    public int Gold {
+        get {
+            return _gold;
+        }
+    }
 
     private void Awake()
     {
@@ -53,6 +60,8 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
         AddEquipmentSlot(Enums.ITEM_TYPE.WEAPON);
         AddEquipmentSlot(Enums.ITEM_TYPE.ARMOR);
         AddEquipmentSlot(Enums.ITEM_TYPE.ACCESSORY);
+
+        _gold = 9999;
     }
 
     public void AddItemSlot(int count)
@@ -259,5 +268,18 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
             }
         }
         return true;
+    }
+
+    public void AddGold(int goldAmount)
+    {
+        _gold += goldAmount;
+    }
+
+    public void MinusGold(int goldAmount)
+    {
+        if(_gold - goldAmount > 0)
+        {
+            _gold -= goldAmount;
+        }
     }
 }

@@ -13,6 +13,8 @@ public class PlayerStatsUIController : MonoBehaviour
     [SerializeField] private Text _moveSpeedValue;
     [SerializeField] private Text _restoreHealthValue;
     [SerializeField] private Text _restoreStaminaValue;
+    [SerializeField] private Text _goldValue;
+
     private IEnumerator _updateStatTextCoroutine;
 
     private void OnEnable()
@@ -46,6 +48,7 @@ public class PlayerStatsUIController : MonoBehaviour
             _moveSpeedValue.text = $"{stats.MoveSpeed:F0}%";
             _restoreHealthValue.text = $"{upgradeStats.HpRecov}";
             _restoreStaminaValue.text = $"{Nums.staminaRecovery}";
+            _goldValue.text = $"{InventoryManager.Instance.Gold}G";
             yield return waitTime;
         }
     }
