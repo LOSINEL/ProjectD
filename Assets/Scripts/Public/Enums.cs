@@ -7,4 +7,5 @@ public static class Enums
     public enum MONSTER_TYPE { NORMAL, MBOSS, SPECIAL, BOSS }
     public enum UI_TYPE { INVENTORY, SHOP, HEAL, MAP, OPTION }
     public enum EFFECT_TYPE { WEAPON }
+    public enum STAT_TYPE { damage, maxHp, defense, maxSp, hpRecovery, spRecovery, attackSpeed, moveSpeed }
 }

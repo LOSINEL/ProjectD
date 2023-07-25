@@ -37,7 +37,7 @@ public class PlayerStatsUIController : MonoBehaviour
             _atkSpeedValue.text = $"{stats.AttackSpeed}";
             _moveSpeedValue.text = $"{stats.MoveSpeed}";
             _restoreHealthValue.text = $"{upgradeStats.HpRecov}";
-            _restoreStaminaValue.text = $"{Nums.staminaRecovery}";
+            _restoreStaminaValue.text = $"{Nums.basicSpRecovery}";
             yield return new WaitForSeconds(0.05f);
         }
     }

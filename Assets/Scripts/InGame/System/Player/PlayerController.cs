@@ -90,11 +90,12 @@ public class PlayerController : MonoBehaviour, IUpdate
 
     IEnumerator RestoreStamina()
     {
+        WaitForSeconds waitTime = new(Nums.spRecoverTime);
         while (true)
         {
             restoreSp = true;
-            Player.instance.RecoverSp(Nums.staminaRecovery * Time.deltaTime);
-            yield return null;
+            Player.instance.RecoverSp((Nums.basicSpRecovery + Player.instance.Data.SpRecovery) * Nums.spRecoverTime);
+            yield return waitTime;
         }
     }
 
