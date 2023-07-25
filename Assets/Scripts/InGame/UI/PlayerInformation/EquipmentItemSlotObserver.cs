@@ -6,13 +6,11 @@ using UnityEngine.EventSystems;
 
 using Assets.Scripts.InGame.System;
 
-public class EquipmentItemSlotObserver : 
-    MonoBehaviour,
-    IPointerDownHandler,
-    IEquipmentObserver
+public class EquipmentItemSlotObserver : MonoBehaviour, IPointerDownHandler, IEquipmentObserver
 {
     private Image _itemImage;
     private IEquipmentSubject _equipmentSubject;
+
     [SerializeField]
     private InventoryItemSlotDragHandler _itemSlotDragHandler;
 
@@ -23,11 +21,12 @@ public class EquipmentItemSlotObserver :
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        EquipmentSO equipment = _equipmentSubject.GetState(this);
-        if (_itemSlotDragHandler.IsDraggable && equipment != null)
-        {
-            // _itemSlotDragHandler.StartDrag(this);
-        }
+        IEquipmentSlot equipmentSlot = _equipmentSubject.GetState(this);
+
+        if (equipmentSlot.IsEmpty() || _itemSlotDragHandler.IsDraggable == false)
+            return;
+
+        _itemSlotDragHandler.StartDrag(equipmentSlot);
     }
 
     public void OnTriggerExit2D(Collider2D collision)
@@ -36,9 +35,10 @@ public class EquipmentItemSlotObserver :
         {
             if (Input.GetMouseButtonUp(0))
             {
-                // InventoryManager.Instance.SwapItem(
-                //    _itemSlotDragHandler.DragTargetItemSlot,
-                //    this);
+                InventoryManager.Instance.SwapItem(
+                    _itemSlotDragHandler.DragTargetItemSlot,
+                    _equipmentSubject.GetState(this)
+                );
             }
         }
     }
@@ -51,15 +51,15 @@ public class EquipmentItemSlotObserver :
 
     public void UpdateObserver()
     {
-        ItemSO item = _equipmentSubject.GetState(this);
+        IEquipmentSlot itemSlot = _equipmentSubject.GetState(this);
 
-        if (item == null)
+        if (itemSlot.IsEmpty())
         {
             _itemImage.enabled = false;
         }
         else
         {
-            _itemImage.sprite = item.ItemSprite;
+            _itemImage.sprite = itemSlot.GetItem().ItemSprite;
             _itemImage.enabled = true;
         }
     }

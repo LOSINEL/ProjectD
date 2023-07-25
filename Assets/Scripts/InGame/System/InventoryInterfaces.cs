@@ -8,7 +8,7 @@ namespace Assets.Scripts.InGame.System
 
     public interface ISubject<Observer, Type> 
         where Observer : IObserver
-        where Type : ItemSO
+        where Type : IItemSlot
     {
         public abstract void AddObserver(Observer observer);
         public abstract void RemoveObserver(Observer observer);
@@ -16,15 +16,17 @@ namespace Assets.Scripts.InGame.System
         public abstract Type GetState(Observer observer);
     }
 
-    public interface IInventorySubject : ISubject<IInventoryObserver, ItemSO> { }
+    public interface IInventorySubject : ISubject<IInventoryObserver, IItemSlot> { }
     public interface IInventoryObserver : IObserver { 
         public abstract void Initialize(IInventorySubject subject);
     }
-    public interface IEquipmentSubject : ISubject<IEquipmentObserver, EquipmentSO> { }
+    public interface IEquipmentSubject : ISubject<IEquipmentObserver, IEquipmentSlot> { }
     public interface IEquipmentObserver : IObserver
     {
         public abstract void Initialize(IEquipmentSubject subject);
     }
+
+    public interface IItemSlotObserver : IObserver { }
 
     public interface IItemSlot
     {

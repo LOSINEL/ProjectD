@@ -4,10 +4,7 @@ using UnityEngine.EventSystems;
 
 using Assets.Scripts.InGame.System;
 
-public class InventoryItemSlotObserver : 
-    MonoBehaviour, 
-    IPointerDownHandler,
-    IInventoryObserver
+public class InventoryItemSlotObserver : MonoBehaviour, IPointerDownHandler, IInventoryObserver
 {
     private Image _itemImage;
     private IInventorySubject _inventorySubject;
@@ -22,12 +19,12 @@ public class InventoryItemSlotObserver :
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        ItemSO item = _inventorySubject.GetState(this);
+        IItemSlot itemSlot = _inventorySubject.GetState(this);
 
-        if (_itemSlotDragHandler.IsDraggable && item != null)
-        {
-            // _itemSlotDragHandler.StartDrag(this);
-        }
+        if (itemSlot.IsEmpty() || _itemSlotDragHandler.IsDraggable == false)
+            return;
+
+        _itemSlotDragHandler.StartDrag(itemSlot);
     }
 
     public void OnTriggerExit2D(Collider2D collision)
@@ -36,7 +33,10 @@ public class InventoryItemSlotObserver :
         {
             if (Input.GetMouseButtonUp(0))
             {
-                // InventoryManager.Instance.SwapItem(_itemSlotDragHandler.DragTargetItemSlot, this);
+                InventoryManager.Instance.SwapItem(
+                    _itemSlotDragHandler.DragTargetItemSlot,
+                    _inventorySubject.GetState(this)
+                );
             }
         }
     }
@@ -49,15 +49,15 @@ public class InventoryItemSlotObserver :
 
     public void UpdateObserver()
     {
-        ItemSO item = _inventorySubject.GetState(this);
+        IItemSlot itemSlot = _inventorySubject.GetState(this);
 
-        if (item == null)
+        if (itemSlot.IsEmpty())
         {
             _itemImage.enabled = false;
         }
         else
         {
-            _itemImage.sprite = item.ItemSprite;
+            _itemImage.sprite = itemSlot.GetItem().ItemSprite;
             _itemImage.enabled = true;
         }
     }

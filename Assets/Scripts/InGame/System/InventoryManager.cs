@@ -76,13 +76,13 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
         }
     }
 
-    public ItemSO GetState(IInventoryObserver observer)
+    public IItemSlot GetState(IInventoryObserver observer)
     {
         foreach((IInventoryObserver, IItemSlot) tuple in _itemList)
         {
             if(tuple.Item1 == observer)
             {
-                return tuple.Item2.GetItem();
+                return tuple.Item2;
             }
         }
         return null;
@@ -118,13 +118,13 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
         }
     }
 
-    public EquipmentSO GetState(IEquipmentObserver observer)
+    public IEquipmentSlot GetState(IEquipmentObserver observer)
     {
-        foreach((IEquipmentObserver, IItemSlot) tuple in _equipmentList)
+        foreach((IEquipmentObserver, IEquipmentSlot) tuple in _equipmentList)
         {
             if(tuple.Item1 == observer)
             {
-                return (EquipmentSO)tuple.Item2.GetItem();
+                return tuple.Item2;
             }
         }
         return null;
