@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour, IUpdate
             if (!restoreSp)
                 restoreSp_IE = StartCoroutine(RestoreStamina());
         }
-        rigid.MovePosition(rigid.position + new Vector3(h, 0, 0) * Player.instance.Data.MoveSpeed * Time.deltaTime);
+        rigid.velocity = new Vector3(h * Player.instance.Data.MoveSpeed, rigid.velocity.y, 0);
     }
 
     IEnumerator RestoreStamina()
