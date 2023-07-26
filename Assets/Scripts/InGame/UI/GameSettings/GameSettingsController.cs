@@ -4,15 +4,8 @@ using UnityEngine;
 
 using Assets.Scripts.InGame.UI.GameSettings;
 
-public class GameSettingsController : MonoBehaviour
+public class GameSettingsController : SingletonMonoBehavior<GameSettingsController>
 {
-    private GameSettingsController _instance;
-
-    public GameSettingsController Instance
-    {
-        get { return _instance; }
-    }
-
     [SerializeField]
     private GameObject _gameSettingsWindow;
 
@@ -30,11 +23,6 @@ public class GameSettingsController : MonoBehaviour
     public bool IsGameSettingsWindowClosed
     {
         get { return _gameSettingsWindow.activeSelf == false; }
-    }
-
-    private void Awake()
-    {
-        _instance = this;
     }
 
     private void Start()

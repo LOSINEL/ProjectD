@@ -2,19 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InGameUIController : MonoBehaviour
+public class InGameUIController : SingletonMonoBehavior<InGameUIController>
 {
-    private static InGameUIController _instance;
 
     [SerializeField]
     private PlayerInformationUIController _playerInformationUIController;
 
     [SerializeField]
     private GameSettingsController _gameSettingsController;
-    public InGameUIController Instance
-    {
-        get { return _instance; }
-    }
 
     public bool IsInGameUIOpen{
         get {
@@ -26,12 +21,6 @@ public class InGameUIController : MonoBehaviour
         get{
             return !IsInGameUIOpen;
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _instance = this;
     }
 
     // Update is called once per frame

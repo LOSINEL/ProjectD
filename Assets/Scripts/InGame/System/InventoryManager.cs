@@ -28,14 +28,11 @@ struct EquipmentSlotObserverPair
     }
 }
 
-class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
+class InventoryManager : 
+    SingletonMonoBehavior<InventoryManager>, 
+    IInventorySubject, 
+    IEquipmentSubject
 {
-    private static InventoryManager _instance;
-    public static InventoryManager Instance
-    {
-        get { return _instance; }
-    }
-
     private List<ItemSlotObserverPair> _inventory;
     private List<EquipmentSlotObserverPair> _equipments;
     [SerializeField]
@@ -48,7 +45,6 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
 
     private void Awake()
     {
-        _instance = this;
         Initialize();
     }
 
