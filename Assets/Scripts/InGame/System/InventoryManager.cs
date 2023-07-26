@@ -94,8 +94,6 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
                 ItemSlotObserverPair pair = _inventory[i];
                 pair.observer = observer;
                 _inventory[i] = pair;
-
-                _inventory[i].observer.UpdateObserver();
                 break;
             }
         }
@@ -139,8 +137,6 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
                 EquipmentSlotObserverPair pair = _equipments[i];
                 pair.observer = observer;
                 _equipments[i] = pair;
-
-                _equipments[i].observer.UpdateObserver();
                 break;
             }
         }
@@ -257,6 +253,8 @@ class InventoryManager : MonoBehaviour, IInventorySubject, IEquipmentSubject
         }
         return null;
     }
+
+    /**********   Implements of Gold System    **********/
 
     public bool IsInventoryFull()
     {
