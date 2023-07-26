@@ -12,11 +12,6 @@ public class InventoryItemSlotObserver : MonoBehaviour, IPointerDownHandler, IIn
     [SerializeField]
     private InventoryItemSlotDragHandler _itemSlotDragHandler;
 
-    void Start()
-    {
-        _itemImage = GetComponent<Image>();
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         IItemSlot itemSlot = _inventorySubject.GetState(this);
@@ -41,10 +36,16 @@ public class InventoryItemSlotObserver : MonoBehaviour, IPointerDownHandler, IIn
         }
     }
 
+    // To update observer, it is inevitable getting 
+    //  image component in Initialize(), not in Start().
     public void Initialize(IInventorySubject subject)
     {
+        _itemImage = GetComponent<Image>();
+
         _inventorySubject = subject;
         _inventorySubject.AddObserver(this);
+
+        UpdateObserver();
     }
 
     public void UpdateObserver()

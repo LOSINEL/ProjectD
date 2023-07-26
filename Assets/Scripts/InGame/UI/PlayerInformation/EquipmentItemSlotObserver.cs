@@ -14,11 +14,6 @@ public class EquipmentItemSlotObserver : MonoBehaviour, IPointerDownHandler, IEq
     [SerializeField]
     private InventoryItemSlotDragHandler _itemSlotDragHandler;
 
-    void Start()
-    {
-        _itemImage = GetComponent<Image>();
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         IEquipmentSlot equipmentSlot = _equipmentSubject.GetState(this);
@@ -43,10 +38,16 @@ public class EquipmentItemSlotObserver : MonoBehaviour, IPointerDownHandler, IEq
         }
     }
 
+    // To update observer, it is inevitable getting 
+    //  image component in Initialize(), not in Start().
     public void Initialize(IEquipmentSubject subject)
     {
+        _itemImage = GetComponent<Image>();
+
         _equipmentSubject = subject;
         _equipmentSubject.AddObserver(this);
+
+        UpdateObserver();
     }
 
     public void UpdateObserver()
