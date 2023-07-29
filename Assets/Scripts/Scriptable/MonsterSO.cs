@@ -29,5 +29,8 @@ public class MonsterSO : ScriptableObject
     {
         [SerializeField] ItemSO item;
         [SerializeField] float dropPercentage;
+
+        public ItemSO Item { get { return item; } }
+        public bool IsDropItem { get { if (Random.Range(0f, 1f) <= dropPercentage) return true; else return false; } }
     }
 }

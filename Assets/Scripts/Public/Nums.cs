@@ -7,4 +7,9 @@ public static class Nums
     public const float uiDeltaTime = 0.05f;
     public const float particleLifeTime = 0.25f;
     public const float spRecoverTime = 0.25f;
+
+    public const float monsterIdleTimeMin = 2f;
+    public const float monsterIdleTimeMax = 5f;
+    public const float monsterMoveTimeMin = 1f;
+    public const float monsterMoveTimeMax = 2f;
 }

@@ -6,8 +6,13 @@ public class DropItem : MonoBehaviour, IInteractable
 {
     [SerializeField] ItemSO item;
 
+    public void SetItem(ItemSO itemData)
+    {
+        item = itemData;
+    }
+
     public void Interact()
     {
-        // Inventory.instance.RequireItem(item);
+        // Inventory.instance.AcquireItem(item);
     }
 }

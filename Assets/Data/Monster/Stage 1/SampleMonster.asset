@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHp: 25
   defense: 0
   attackSpeed: 1
-  moveSpeed: 1
+  moveSpeed: 2
   isGround: 1
   isMeleeAttack: 1
   monsterType: 0
