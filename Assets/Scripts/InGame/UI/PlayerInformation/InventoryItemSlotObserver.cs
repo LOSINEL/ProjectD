@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 using Assets.Scripts.InGame.System;
+using Assets.Scripts.InGame.UI.ContextMenu;
 
 public class InventoryItemSlotObserver : MonoBehaviour, IPointerDownHandler, IInventoryObserver
 {
@@ -14,6 +15,13 @@ public class InventoryItemSlotObserver : MonoBehaviour, IPointerDownHandler, IIn
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            InGameContextMenuController.Instance.OpenContextMenu(
+                new EquipCompositeContextMenu(_inventorySubject.GetState(this)));
+            return;
+        }
+
         IItemSlot itemSlot = _inventorySubject.GetState(this);
 
         if (itemSlot.IsEmpty() || _itemSlotDragHandler.IsDraggable == false)

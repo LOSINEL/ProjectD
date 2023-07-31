@@ -28,21 +28,22 @@ struct EquipmentSlotObserverPair
     }
 }
 
-class InventoryManager : 
-    SingletonMonoBehavior<InventoryManager>, 
-    IInventorySubject, 
-    IEquipmentSubject
+class InventoryManager
+    : SingletonMonoBehavior<InventoryManager>,
+        IInventorySubject,
+        IEquipmentSubject
 {
     private List<ItemSlotObserverPair> _inventory;
     private List<EquipmentSlotObserverPair> _equipments;
+
     [SerializeField]
     private int _gold;
-    public int Gold {
-        get {
-            return _gold;
-        }
+    public int Gold
+    {
+        get { return _gold; }
     }
 
+#region Initialization
     private void Awake()
     {
         Initialize();
@@ -70,14 +71,10 @@ class InventoryManager :
 
     public void AddEquipmentSlot(Enums.ITEM_TYPE itemType)
     {
-        _equipments.Add(
-            new EquipmentSlotObserverPair(
-                null, new EquipmentItemSlot(itemType)
-            ));
+        _equipments.Add(new EquipmentSlotObserverPair(null, new EquipmentItemSlot(itemType)));
     }
-
-    /********** Implements of IInventorySubject **********/
-
+#endregion Initialization
+#region IInventorySubject
     public void AddObserver(IInventoryObserver observer)
     {
         // find pair what has null IInventoryObserver.
@@ -118,9 +115,8 @@ class InventoryManager :
         }
         return null;
     }
-
-    /********** Implements of IEquipmentSubject **********/
-
+#endregion IInventorySubject
+#region IEquipmentSubject
     public void AddObserver(IEquipmentObserver observer)
     {
         // find pair what has null IEquipmentObserver.
@@ -161,7 +157,8 @@ class InventoryManager :
         }
         return null;
     }
-
+#endregion IEquipmentSubject
+#region ISubject.Notify
     public void Notify()
     {
         foreach (ItemSlotObserverPair pair in _inventory)
@@ -179,8 +176,30 @@ class InventoryManager :
             }
         }
     }
+#endregion ISubject
+#region InventoryManager
+    ///<summary>
+    ///Equip an item in inventory to equipment.
+    ///<param name="itemSlot">An one of item slot in inventory.</param>
+    ///</summary>
+    public void EquipItem(IItemSlot itemSlot)
+    {
+        ItemSO item = itemSlot.GetItem();
+        if (item is not EquipmentSO)
+            return;
 
-    /********** Implements of InventoryManager **********/
+        EquipmentSlotObserverPair pair = _equipments.Find(
+            pair => pair.equipmentSlot.GetEquipmentType() == item.ItemType
+        );
+        SwapItem(itemSlot, pair.equipmentSlot);
+    }
+
+    public void UnequipItem(IItemSlot itemSlot)
+    {
+        ItemSO item = itemSlot.GetItem();
+        itemSlot.SetItem(null);
+        AddItem(item);
+    }
 
     public void SwapItem(IItemSlot itemSlotA, IItemSlot itemSlotB)
     {
@@ -249,9 +268,8 @@ class InventoryManager :
         }
         return null;
     }
-
-    /**********   Implements of Gold System    **********/
-
+#endregion InventoryManager
+#region GoldSystem
     public bool IsInventoryFull()
     {
         foreach (ItemSlotObserverPair pair in _inventory)
@@ -271,9 +289,10 @@ class InventoryManager :
 
     public void MinusGold(int goldAmount)
     {
-        if(_gold - goldAmount > 0)
+        if (_gold - goldAmount > 0)
         {
             _gold -= goldAmount;
         }
     }
+#endregion GoldSystem
 }

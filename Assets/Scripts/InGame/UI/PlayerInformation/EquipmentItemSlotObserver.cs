@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Assets.Scripts.InGame.UI.ContextMenu;
 
 using Assets.Scripts.InGame.System;
 
@@ -20,6 +19,12 @@ public class EquipmentItemSlotObserver : MonoBehaviour, IPointerDownHandler, IEq
 
         if (equipmentSlot.IsEmpty() || _itemSlotDragHandler.IsDraggable == false)
             return;
+
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            InGameContextMenuController.Instance.OpenContextMenu(
+                new UnequipCompositeContextMenu(_equipmentSubject.GetState(this)));
+        }
 
         _itemSlotDragHandler.StartDrag(equipmentSlot);
     }
