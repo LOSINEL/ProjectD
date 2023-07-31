@@ -7,6 +7,7 @@ namespace Assets.Scripts.InGame.UI.ContextMenu
         public UnequipCompositeContextMenu(IItemSlot itemSlot)
         {
             Add(new UnequipContextMenu(itemSlot));
+            Add(new RefundContextMenu(itemSlot));
         }
     }
 

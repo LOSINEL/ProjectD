@@ -7,6 +7,7 @@ namespace Assets.Scripts.InGame.UI.ContextMenu
         public EquipCompositeContextMenu(IItemSlot itemSlot)
         {
             Add(new EquipContextMenu(itemSlot));
+            Add(new RefundContextMenu(itemSlot));
         }
     }
 
