@@ -13,17 +13,19 @@ public class MonsterSO : ScriptableObject
     [SerializeField] bool isMeleeAttack;
     [SerializeField] Enums.MONSTER_TYPE monsterType;
     [SerializeField] DropItem[] dropItems;
+    [SerializeField] int gold;
 
     public string MonsterName { get { return monsterName; } }
     public int Damage { get { return damage; } }
     public int MaxHp { get { return maxHp; } }
     public int Defense { get { return defense; } }
     public float AttackSpeed { get { return attackSpeed; } }
-    public float MoveSpeed { get { return moveSpeed; } }
+    public float MoveSpeed { get { return moveSpeed * Nums.moveSpeedBasic; } }
     public bool IsGround { get { return isGround; } }
     public bool IsMeleeAttack { get { return isMeleeAttack; } }
     public Enums.MONSTER_TYPE MonsterType { get { return monsterType; } }
     public DropItem[] DropItems { get { return dropItems; } }
+    public int Gold { get { return (int)Random.Range(gold * 0.75f, gold * 1.4f); } }
 
     public class DropItem
     {

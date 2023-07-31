@@ -4772,7 +4772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c5641f80f1ddfa438390642d5a02ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterData: {fileID: 11400000, guid: 82a6012268971fe41ae45685de086952, type: 2}
+  monsterData: {fileID: 11400000, guid: cb63d7694359fb542a13fec832a97c6e, type: 2}
 --- !u!4 &1069819387
 Transform:
   m_ObjectHideFlags: 0

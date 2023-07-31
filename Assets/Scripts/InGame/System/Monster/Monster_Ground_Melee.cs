@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Monster_Ground_Melee : Monster, IUpdate
 {
-    bool randomMove = true;
-    float moveTime = 0f;
-    float idleTime = 0f;
     float stateTime = 0f;
     float attackTime = 0f;
     float attackCoolTime;
@@ -78,7 +75,9 @@ public class Monster_Ground_Melee : Monster, IUpdate
     void RandomMove()
     {
         if (stateTime <= 0f)
+        {
             stateNum = Random.Range(0, 3);
+        }
         Vector3 dir = rigid.velocity;
         switch (stateNum)
         {

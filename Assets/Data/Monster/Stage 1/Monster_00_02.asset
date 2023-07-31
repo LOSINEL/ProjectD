@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fa349e18f08a41459e9f413b2d7dfb9, type: 3}
-  m_Name: SampleMonster
+  m_Name: Monster_00_02
   m_EditorClassIdentifier: 
-  monsterName: sample monster
-  damage: 10
-  maxHp: 25
-  defense: 0
-  attackSpeed: 1
-  moveSpeed: 2
+  monsterName: "\uC624\uC5FC\uB41C \uCCAD\uC18C\uBD80"
+  damage: 4
+  maxHp: 19
+  defense: 1
+  attackSpeed: 0.65
+  moveSpeed: 0.5
   isGround: 1
-  isMeleeAttack: 1
+  isMeleeAttack: 0
   monsterType: 0
+  gold: 5
