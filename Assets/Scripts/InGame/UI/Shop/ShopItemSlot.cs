@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+using Assets.Scripts.InGame.UI.Shop;
+
 public class ShopItemSlot : MonoBehaviour, IPointerDownHandler
 {
     private ItemSO _item;

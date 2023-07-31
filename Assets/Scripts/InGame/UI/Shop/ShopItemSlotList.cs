@@ -1,33 +1,34 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ShopItemSlotList : MonoBehaviour
+namespace Assets.Scripts.InGame.UI.Shop
 {
-    [SerializeField]
-    private List<ShopItemSlot> _itemSlotList;
-
-    public void Awake()
+    public class ShopItemSlotList : MonoBehaviour
     {
-        FindAllItemSlot();
-    }
+        [SerializeField]
+        private List<ShopItemSlot> _itemSlotList;
 
-    private void FindAllItemSlot()
-    {
-        _itemSlotList = new();
-        ShopItemSlot[] slots = GetComponentsInChildren<ShopItemSlot>();
-        foreach(ShopItemSlot slot in slots)
+        public void Awake()
         {
-            _itemSlotList.Add(slot);
+            FindAllItemSlot();
         }
-    }
 
-    public void ShowItemList(List<EquipmentSO> itemList)
-    {
-        for (int i = 0; i < _itemSlotList.Count; i++)
+        private void FindAllItemSlot()
         {
-            _itemSlotList[i].SetSlotImage(itemList[i]);
+            _itemSlotList = new();
+            ShopItemSlot[] slots = GetComponentsInChildren<ShopItemSlot>();
+            foreach (ShopItemSlot slot in slots)
+            {
+                _itemSlotList.Add(slot);
+            }
+        }
+
+        public void ShowItemList(List<EquipmentSO> itemList)
+        {
+            for (int i = 0; i < _itemSlotList.Count; i++)
+            {
+                _itemSlotList[i].SetSlotImage(itemList[i]);
+            }
         }
     }
 }

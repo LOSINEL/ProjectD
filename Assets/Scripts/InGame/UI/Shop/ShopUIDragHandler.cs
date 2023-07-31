@@ -1,33 +1,35 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ShopUIDragHandler : MonoBehaviour,
-    IBeginDragHandler,
-    IDragHandler
+namespace Assets.Scripts.InGame.UI.Shop
 {
-    private Vector2 distance;
-    private bool IsDraggable = false;
-    [SerializeField]
-    private GameObject _shopPopupTopBar;
-
-    public void OnBeginDrag(PointerEventData eventData)
+    public class ShopUIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
-        IsDraggable = eventData.hovered.Contains(_shopPopupTopBar);
+        private Vector2 distance;
+        private bool IsDraggable = false;
 
-        if (IsDraggable)
+        [SerializeField]
+        private GameObject _shopPopupTopBar;
+
+        public void OnBeginDrag(PointerEventData eventData)
         {
-            distance = new(
-                eventData.position.x - transform.position.x,
-                eventData.position.y - transform.position.y
-            );
+            IsDraggable = eventData.hovered.Contains(_shopPopupTopBar);
+
+            if (IsDraggable)
+            {
+                distance = new(
+                    eventData.position.x - transform.position.x,
+                    eventData.position.y - transform.position.y
+                );
+            }
         }
-    }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (IsDraggable)
+        public void OnDrag(PointerEventData eventData)
         {
-            transform.position = eventData.position - distance;
+            if (IsDraggable)
+            {
+                transform.position = eventData.position - distance;
+            }
         }
     }
 }

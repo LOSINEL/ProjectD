@@ -3,79 +3,97 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopPurchaseConfirmPopupController : MonoBehaviour
+namespace Assets.Scripts.InGame.UI.Shop
 {
-    [SerializeField]
-    private GameObject _shopPurchaseConfirmPopup;
-    [SerializeField]
-    private Text _shopPurchaseConfirmDialog;
-    [SerializeField]
-    private Text _shopPurshaceConfirmYesButtonText;
-    private ItemSO _selectedItem;
-    // TODO
-    // this variable might be exist in ItemSO.
-    // Check if those exist in ItemSO, remove them.
-    private string _dialog;
-    private int _cost;
-
-    public bool IsShopPurchaseConfirmPopupUIOpen {
-        get {
-            return _shopPurchaseConfirmPopup.activeSelf;
-        }
-    }
-
-    public void OpenShopPurchaseConfirmPopupUI(ItemSO item) {
-        _shopPurchaseConfirmPopup.SetActive(true);
-        _selectedItem = item;
-        Initialize();
-    }
-
-    public void CloseShopPurchaseConfirmPopup() {
-        _shopPurchaseConfirmPopup.SetActive(false);
-    }
-
-    public void Initialize()
+    public class ShopPurchaseConfirmPopupController : MonoBehaviour
     {
-        if(_selectedItem is EquipmentSO)
+        [SerializeField]
+        private GameObject _shopPurchaseConfirmPopup;
+
+        [SerializeField]
+        private Text _shopPurchaseConfirmDialog;
+
+        [SerializeField]
+        private Text _shopPurshaceConfirmYesButtonText;
+        private ItemSO _selectedItem;
+
+        // TODO
+        // this variable might be exist in ItemSO.
+        // Check if those exist in ItemSO, remove them.
+        private string _dialog;
+        private int _cost;
+
+        public bool IsShopPurchaseConfirmPopupUIOpen
         {
-            EquipmentSO selectedEquipment = (EquipmentSO)_selectedItem;
-            Dictionary<Enums.ITEM_GRADE, string> _gradeDictionary = new(){
-                {Enums.ITEM_GRADE.NORMAL, "노말"},
-                {Enums.ITEM_GRADE.RARE, "레어"},
-                {Enums.ITEM_GRADE.EPIC, "에픽"}
-            };
-            _dialog = $"{_gradeDictionary[selectedEquipment.Grade]} {selectedEquipment.ItemName}\n진짜 구매하시겠습니까?";
+            get { return _shopPurchaseConfirmPopup.activeSelf; }
         }
-        else 
+
+        public void OpenShopPurchaseConfirmPopupUI(ItemSO item)
         {
-            _dialog = $"{_selectedItem.ItemName}\n진짜 구매하시겠습니까?";
+            _shopPurchaseConfirmPopup.SetActive(true);
+            _selectedItem = item;
+            Initialize();
         }
 
-        _cost = 300;
+        public void CloseShopPurchaseConfirmPopup()
+        {
+            _shopPurchaseConfirmPopup.SetActive(false);
+        }
 
-        _shopPurchaseConfirmDialog.text = _dialog;
-        _shopPurshaceConfirmYesButtonText.text = $"구매\n{_cost}G";
-        _shopPurchaseConfirmPopup.transform.position = new Vector3(Screen.width/2, Screen.height/2, 0);
-    }
+        public void Initialize()
+        {
+            if (_selectedItem is EquipmentSO)
+            {
+                EquipmentSO selectedEquipment = (EquipmentSO)_selectedItem;
+                Dictionary<Enums.ITEM_GRADE, string> _gradeDictionary =
+                    new()
+                    {
+                        { Enums.ITEM_GRADE.NORMAL, ShopPurchaseConfirmPopupStrings.NormalGrade },
+                        { Enums.ITEM_GRADE.RARE, ShopPurchaseConfirmPopupStrings.RareGrade },
+                        { Enums.ITEM_GRADE.EPIC, ShopPurchaseConfirmPopupStrings.EpicGrade }
+                    };
+                _dialog =
+                    $"{_gradeDictionary[selectedEquipment.Grade]} {selectedEquipment.ItemName}\n진짜 구매하시겠습니까?";
+            }
+            else
+            {
+                _dialog = $"{_selectedItem.ItemName}\n진짜 구매하시겠습니까?";
+            }
 
-    public void Purchase() 
-    {
-        if(InventoryManager.Instance.IsInventoryFull())
+            // TODO
+            // This is temporary value for test.
+            // It should be fixed after create ItemPrice value in ItemSO.
+            _cost = 300;
+
+            _shopPurchaseConfirmDialog.text = _dialog;
+            _shopPurshaceConfirmYesButtonText.text = $"구매\n{_cost}G";
+            _shopPurchaseConfirmPopup.transform.position = new Vector3(
+                Screen.width / 2,
+                Screen.height / 2,
+                0
+            );
+        }
+
+        public void Purchase()
+        {
+            if (InventoryManager.Instance.IsInventoryFull())
+            {
+                CloseShopPurchaseConfirmPopup();
+                return;
+            }
+
+            // add item to inventory.
+            InventoryManager.Instance.MinusGold(_cost);
+            InventoryManager.Instance.AddItem(_selectedItem);
+            // TODO
+            // pay money for item.
+
+            CloseShopPurchaseConfirmPopup();
+        }
+
+        public void Cancel()
         {
             CloseShopPurchaseConfirmPopup();
-            return;
         }
-
-        // add item to inventory.
-        InventoryManager.Instance.MinusGold(_cost);
-        InventoryManager.Instance.AddItem(_selectedItem);
-        // TODO
-        // pay money for item.
-
-        CloseShopPurchaseConfirmPopup();
-    }
-
-    public void Cancel() {
-        CloseShopPurchaseConfirmPopup();
     }
 }
