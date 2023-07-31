@@ -24,6 +24,7 @@ public class EquipmentItemSlotObserver : MonoBehaviour, IPointerDownHandler, IEq
         {
             InGameContextMenuController.Instance.OpenContextMenu(
                 new UnequipCompositeContextMenu(_equipmentSubject.GetState(this)));
+            return;
         }
 
         _itemSlotDragHandler.StartDrag(equipmentSlot);
