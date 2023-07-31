@@ -246,6 +246,20 @@ class InventoryManager
         Notify();
     }
 
+    public void RefundItem(IItemSlot itemSlot)
+    {
+        ItemSO item = itemSlot.GetItem();
+
+        // TODO
+        // This is temporary value for test.
+        // It should be fixed after create ItemPrice value in ItemSO.
+        int price = 150;
+
+        itemSlot.SetItem(null);
+        InventoryManager.Instance.AddGold(price);
+        Notify();
+    }
+
     public void AddItem(ItemSO item)
     {
         IItemSlot itemSlot = GetEmptyInventorySlot();
