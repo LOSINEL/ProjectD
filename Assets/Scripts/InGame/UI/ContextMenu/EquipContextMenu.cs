@@ -17,7 +17,7 @@ namespace Assets.Scripts.InGame.UI.ContextMenu
 
         public EquipContextMenu(IItemSlot itemSlot) 
         {
-            SetLabel("장착");
+            SetLabel(ContextMenuButtonLabel.Equip);
             _selectedItemSlot = itemSlot;
         }
 

@@ -17,7 +17,7 @@ namespace Assets.Scripts.InGame.UI.ContextMenu
 
         public UnequipContextMenu(IItemSlot itemSlot) 
         {
-            SetLabel("해제");
+            SetLabel(ContextMenuButtonLabel.Unequip);
             _selectedItemSlot = itemSlot;
         }
 
