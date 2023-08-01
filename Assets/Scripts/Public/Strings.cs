@@ -9,6 +9,7 @@ public static class Strings
     public const string anim_float_MoveSpeed = "MoveSpeed";
     public const string anim_float_AttackSpeed = "AttackSpeed";
     public const string anim_float_VelocityY = "VelocityY";
+    public const string anim_float_VelocityX = "VelocityX";
 
     public const string moveHorizontal = "Horizontal";
 

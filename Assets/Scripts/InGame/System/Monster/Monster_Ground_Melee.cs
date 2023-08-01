@@ -51,6 +51,7 @@ public class Monster_Ground_Melee : Monster, IUpdate
 
     void MoveToPlayer()
     {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(Strings.animation_Attack)) return;
         int tmp = (Player.instance.transform.position.x > tr.position.x) ? 1 : -1;
         Vector3 dir = rigid.velocity;
         dir.x = monsterData.MoveSpeed * tmp;
@@ -63,6 +64,7 @@ public class Monster_Ground_Melee : Monster, IUpdate
         {
             tr.rotation = Quaternion.Euler(new Vector3(0f, -90f, 0f));
         }
+        animator.SetFloat(Strings.anim_float_VelocityX, Mathf.Abs(dir.x));
     }
 
     void Attack()
@@ -84,26 +86,31 @@ public class Monster_Ground_Melee : Monster, IUpdate
             case 0: // idle
                 if (stateTime <= 0f)
                     stateTime = Random.Range(Nums.monsterIdleTimeMin, Nums.monsterIdleTimeMax);
+                dir.x = 0;
+                rigid.velocity = dir;
                 break;
             case 1: // left move
-                if (stateTime <= 0f)
-                {
-                    tr.rotation = Quaternion.Euler(new Vector3(0f, -90f, 0f));
-                    stateTime = Random.Range(Nums.monsterMoveTimeMin, Nums.monsterMoveTimeMax);
-                }
+                RotateToMoveDir_Random(true);
                 dir.x = -monsterData.MoveSpeed;
                 rigid.velocity = dir;
                 break;
             case 2: // right move
-                if (stateTime <= 0f)
-                {
-                    tr.rotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
-                    stateTime = Random.Range(Nums.monsterMoveTimeMin, Nums.monsterMoveTimeMax);
-                }
+                RotateToMoveDir_Random(false);
                 dir.x = monsterData.MoveSpeed;
                 rigid.velocity = dir;
                 break;
             default:break;
+        }
+        animator.SetFloat(Strings.anim_float_VelocityX, Mathf.Abs(dir.x));
+    }
+
+    void RotateToMoveDir_Random(bool isLeft)
+    {
+        int tmp = isLeft ? -1 : 1;
+        if (stateTime <= 0f)
+        {
+            tr.rotation = Quaternion.Euler(new Vector3(0f, tmp * 90f, 0f));
+            stateTime = Random.Range(Nums.monsterMoveTimeMin, Nums.monsterMoveTimeMax);
         }
     }
 }

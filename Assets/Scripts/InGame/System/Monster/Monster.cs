@@ -5,6 +5,7 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     [SerializeField] protected MonsterSO monsterData;
+    [SerializeField] GameObject dropItem;
 
     float nowHp;
     protected bool enemyCheck = false;
@@ -62,9 +63,8 @@ public class Monster : MonoBehaviour
         {
             if (monsterData.DropItems[i].IsDropItem)
             {
-                // GameObject tmpObj = Instantiate(dropItem, Vector3.zero, Quaternion.identity);
-                // tmpObj.GetComponent<DropItem>().SetItem(monsterData.DropItems[i].Item);
-                // Inventory.instance.AcquireItem(monsterData.Dropitems[i].Item);
+                GameObject tmpObj = Instantiate(dropItem, Vector3.zero, Quaternion.identity);
+                tmpObj.GetComponent<DropItem>().SetItem(monsterData.DropItems[i].Item);
             }
         }
     }
