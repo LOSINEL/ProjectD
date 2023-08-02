@@ -9,7 +9,6 @@ public class ItemManager : MonoBehaviour
     [SerializeField] SerializableDictionary<ItemSO, WeaponSO> weapons = new();
     [SerializeField] SerializableDictionary<ItemSO, ArmorSO> armors = new();
     [SerializeField] SerializableDictionary<ItemSO, AccessorySO> accessories = new();
-    [SerializeField] ItemSO item;
 
     private void Awake()
     {
@@ -29,5 +28,36 @@ public class ItemManager : MonoBehaviour
             default:
                 return null;
         }
+    }
+
+    public EquipmentSO GetRandomItem(Enums.ITEM_GRADE itemGrade)
+    {
+        int itemType = Random.Range(0, (int)Enums.ITEM_TYPE.ENUM_SIZE);
+        switch(itemType)
+        {
+            case 0:
+                while (true)
+                {
+                    EquipmentSO tmp = weapons.GetValue(Random.Range(0, weapons.Count));
+                    if (tmp.Grade == itemGrade)
+                        return tmp;
+                }
+            case 1:
+                while (true)
+                {
+                    EquipmentSO tmp = armors.GetValue(Random.Range(0, armors.Count));
+                    if (tmp.Grade == itemGrade)
+                        return tmp;
+                }
+            case 2:
+                while (true)
+                {
+                    EquipmentSO tmp = accessories.GetValue(Random.Range(0, accessories.Count));
+                    if (tmp.Grade == itemGrade)
+                        return tmp;
+                }
+            default:break;
+        }
+        return null;
     }
 }

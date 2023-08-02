@@ -21,6 +21,11 @@ public class SerializableDictionary<Tkey, Tvalue>
         return valueList[keyList.IndexOf(key)];
     }
 
+    public Tvalue GetValue(int index)
+    {
+        return valueList[index];
+    }
+
     public void Remove(Tkey key)
     {
         valueList.Remove(valueList[keyList.IndexOf(key)]);

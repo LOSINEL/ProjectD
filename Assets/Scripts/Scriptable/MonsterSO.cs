@@ -29,10 +29,10 @@ public class MonsterSO : ScriptableObject
 
     public class DropItem
     {
-        [SerializeField] ItemSO item;
+        [SerializeField] Enums.ITEM_GRADE itemGrade;
         [SerializeField] float dropPercentage;
 
-        public ItemSO Item { get { return item; } }
+        public Enums.ITEM_GRADE ItemGrade { get { return itemGrade; } }
         public bool IsDropItem { get { if (Random.Range(0f, 1f) <= dropPercentage) return true; else return false; } }
     }
 }

@@ -1,6 +1,7 @@
 public static class Strings
 {
     public static readonly string[] sceneNames = new string[(int)Enums.SCENE_TYPE.ENUM_SIZE] { "MainMenu", "InGame" };
+    public static readonly string[] itemNames = new string[] { "hi" };
 
     public const string animation_Attack = "Attack";
     public const string animation_Move = "Move";
@@ -18,4 +19,6 @@ public static class Strings
     public const string tag_Monster = "Monster";
     public const string tag_Npc = "Npc";
     public const string tag_DropItem = "DropItem";
+
+    public const string itemMaterialPath = "Materials/Item";
 }

@@ -64,7 +64,7 @@ public class Monster : MonoBehaviour
             if (monsterData.DropItems[i].IsDropItem)
             {
                 GameObject tmpObj = Instantiate(dropItem, Vector3.zero, Quaternion.identity);
-                tmpObj.GetComponent<DropItem>().SetItem(monsterData.DropItems[i].Item);
+                tmpObj.GetComponent<DropItem>().Init(monsterData.DropItems[i].ItemGrade);
             }
         }
     }
