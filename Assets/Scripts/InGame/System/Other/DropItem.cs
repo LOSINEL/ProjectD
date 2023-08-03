@@ -24,8 +24,7 @@ public class DropItem : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        Debug.Log(item);
-        // Inventory.instance.AcquireItem(item);
-        // Destroy(this.gameObject);
+        Debug.Log($"{item} È¹µæ");
+        Destroy(this.gameObject);
     }
 }
