@@ -7,7 +7,10 @@ public class EffectManager : MonoBehaviour
     public static EffectManager instance;
 
     [SerializeField] SerializableDictionary<Enums.EFFECT_TYPE, Effect> effects = new();
+    [SerializeField] Material[] itemBoxMetarials;
     Transform tr;
+
+    public Material[] ItemBoxMaterials { get { return itemBoxMetarials; } }
 
     private void Awake()
     {

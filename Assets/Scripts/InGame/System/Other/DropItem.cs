@@ -5,26 +5,21 @@ using UnityEngine;
 public class DropItem : MonoBehaviour, IInteractable
 {
     ItemSO item;
-    MeshRenderer meshRenderer;
-
-    private void Awake()
-    {
-        meshRenderer = GetComponent<MeshRenderer>();
-    }
+    [SerializeField] ParticleSystemRenderer particle;
 
     private void Start()
     {
-        Init(Enums.ITEM_GRADE.LEGENDARY);
+        Init(Enums.ITEM_GRADE.NORMAL);
     }
 
     public void Init(Enums.ITEM_GRADE ItemGrade)
     {
         item = ItemManager.instance.GetRandomItem(ItemGrade);
+        particle.material = EffectManager.instance.ItemBoxMaterials[(int)ItemGrade];
     }
 
     public void Interact()
     {
-        Debug.Log($"{item} È¹µæ");
         Destroy(this.gameObject);
     }
 }

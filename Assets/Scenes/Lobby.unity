@@ -1600,6 +1600,11 @@ MonoBehaviour:
     valueList:
     - effectObject: {fileID: 5437533377357053344, guid: 93e7f3b35cc4b474ab001ab731f1decb, type: 3}
       effectNum: 10
+  itemBoxMetarials:
+  - {fileID: 2100000, guid: 07b562f819a36d64c8ceb5196b613cad, type: 2}
+  - {fileID: 2100000, guid: 8fed65976d6e03145a931703ee2125fd, type: 2}
+  - {fileID: 2100000, guid: d9f301f093a6bda408b7a564acc41b27, type: 2}
+  - {fileID: 2100000, guid: 573731477e17f384a8a87400ee2d4e31, type: 2}
 --- !u!1 &932930463
 GameObject:
   m_ObjectHideFlags: 0
@@ -4827,6 +4832,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1091454733, guid: c28e458222ee79741b1996c6c37ad99f, type: 3}
+      propertyPath: particle
+      value: 
+      objectReference: {fileID: 1160611449}
     - target: {fileID: 1587852896580244, guid: c28e458222ee79741b1996c6c37ad99f, type: 3}
       propertyPath: m_Name
       value: ItemBox
@@ -5137,6 +5146,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4050002223867092, guid: 8a3566550e9c0ba46b78e7bcdcb9d056, type: 3}
   m_PrefabInstance: {fileID: 1146786800}
+  m_PrefabAsset: {fileID: 0}
+--- !u!199 &1160611449 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 1160611449, guid: c28e458222ee79741b1996c6c37ad99f, type: 3}
+  m_PrefabInstance: {fileID: 1091454731}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1200216808
 GameObject:
