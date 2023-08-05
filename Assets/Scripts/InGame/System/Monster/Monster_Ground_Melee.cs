@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Monster_Ground_Melee : Monster, IUpdate
 {
+    [SerializeField] BoxCollider attackCol;
     float stateTime = 0f;
     float attackTime = 0f;
     float attackCoolTime;
@@ -112,5 +113,15 @@ public class Monster_Ground_Melee : Monster, IUpdate
             tr.rotation = Quaternion.Euler(new Vector3(0f, tmp * 90f, 0f));
             stateTime = Random.Range(Nums.monsterMoveTimeMin, Nums.monsterMoveTimeMax);
         }
+    }
+
+    public void ActivateAttack()
+    {
+        attackCol.enabled = true;
+    }
+
+    public void DeactivateAttack()
+    {
+        attackCol.enabled = false;
     }
 }
