@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Assets.Scripts.InGame.UI.StageSelect
 {
     [SerializeField]
-    public enum StageEnum
+    public enum StageNumber
     {
         Stage1,
         Stage2,
@@ -17,8 +17,9 @@ namespace Assets.Scripts.InGame.UI.StageSelect
     [Serializable]
     public struct StageMetadata
     {
-        public StageEnum stageName;
+        public StageNumber stageNumber;
         public Sprite previewImage;
         public string information;
+        public string stageSceneName;
     }
 }

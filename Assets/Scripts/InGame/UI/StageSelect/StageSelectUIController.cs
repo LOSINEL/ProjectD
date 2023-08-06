@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.InGame.UI.StageSelect
 {
@@ -12,26 +13,34 @@ namespace Assets.Scripts.InGame.UI.StageSelect
 
         [SerializeField]
         private Image _stagePreviewImage;
+
         [SerializeField]
         private Text _stageInformationText;
 
         [SerializeField]
         private List<StageMetadata> _stageMetadataList;
 
-        private StageEnum _selectStageName;
+        private StageNumber _selectStageNumber;
 
         public bool IsStageSelectUIOpen
         {
             get { return _stageSelectUI.activeSelf; }
         }
 
-        void Start() 
+        private void Start()
         {
+            Initialize();
         }
 
         public void OpenStageSelectUI()
         {
+            Initialize();
             _stageSelectUI.SetActive(true);
+        }
+
+        private void Initialize()
+        {
+            SelectStage(StageNumber.Stage1);
         }
 
         public void CloseStageSelectUI()
@@ -39,9 +48,9 @@ namespace Assets.Scripts.InGame.UI.StageSelect
             _stageSelectUI.SetActive(false);
         }
 
-        public void SelectStage(StageEnum stageName)
+        public void SelectStage(StageNumber stageNumber)
         {
-            _selectStageName = stageName;
+            _selectStageNumber = stageNumber;
             ShowStagePreviewImage();
             ShowStageInformation();
         }
@@ -53,7 +62,7 @@ namespace Assets.Scripts.InGame.UI.StageSelect
 
         private Sprite GetSelectedStagePreviewImage()
         {
-            return _stageMetadataList.Find(x => x.stageName == _selectStageName).previewImage;
+            return _stageMetadataList.Find(x => x.stageNumber == _selectStageNumber).previewImage;
         }
 
         private void ShowStageInformation()
@@ -63,9 +72,17 @@ namespace Assets.Scripts.InGame.UI.StageSelect
 
         private string GetSelectedStageInformation()
         {
-            return _stageMetadataList.Find(x => x.stageName == _selectStageName).information;
+            return _stageMetadataList.Find(x => x.stageNumber == _selectStageNumber).information;
         }
 
-        public void ChangeSceneToSelectedStage() { }
+        public void LoadSceneToSelectedStage()
+        {
+            SceneManager.LoadScene(GetSelectedStageSceneName());
+        }
+
+        private string GetSelectedStageSceneName()
+        {
+            return _stageMetadataList.Find(x => x.stageNumber == _selectStageNumber).stageSceneName;
+        }
     }
 }

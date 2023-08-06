@@ -10,7 +10,7 @@ namespace Assets.Scripts.InGame.UI.StageSelect
         [SerializeField]
         private StageSelectUIController _stageSelectUIController;
         [SerializeField]
-        private StageEnum _stageEnum;
+        private StageNumber _stageEnum;
 
         public void Start()
         {

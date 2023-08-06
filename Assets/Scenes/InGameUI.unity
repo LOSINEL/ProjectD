@@ -2688,7 +2688,7 @@ RectTransform:
   - {fileID: 944751981}
   - {fileID: 548729943}
   m_Father: {fileID: 1494523621}
-  m_RootOrder: 12
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3984,7 +3984,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 549188920}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1736871624}
+        m_TargetAssemblyTypeName: Assets.Scripts.InGame.UI.StageSelect.StageSelectUIController,
+          Assembly-CSharp
+        m_MethodName: LoadSceneToSelectedStage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &549188920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5528,7 +5541,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1494523621}
-  m_RootOrder: 13
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6778,7 +6791,7 @@ RectTransform:
   - {fileID: 595087079}
   - {fileID: 1394090347}
   m_Father: {fileID: 1494523621}
-  m_RootOrder: 14
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7931,7 +7944,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1494523621}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &989283085
 MonoBehaviour:
@@ -11289,7 +11302,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1494523621}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11423,13 +11436,13 @@ RectTransform:
   - {fileID: 1930910473}
   - {fileID: 1905107534}
   - {fileID: 586942788}
+  - {fileID: 850892563}
+  - {fileID: 1736871623}
   - {fileID: 1710897992}
   - {fileID: 989283084}
   - {fileID: 1477328501}
   - {fileID: 367373097}
   - {fileID: 754194531}
-  - {fileID: 850892563}
-  - {fileID: 1736871623}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13267,7 +13280,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1494523621}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13421,7 +13434,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1494523621}
-  m_RootOrder: 15
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1736871624
 MonoBehaviour:
@@ -13439,21 +13452,26 @@ MonoBehaviour:
   _stagePreviewImage: {fileID: 595087080}
   _stageInformationText: {fileID: 810186151}
   _stageMetadataList:
-  - stageName: 0
+  - stageNumber: 0
     previewImage: {fileID: 21300000, guid: 3086d66a563317b40a20a20da2c64ac0, type: 3}
     information: 123
-  - stageName: 1
+    stageSceneName: 
+  - stageNumber: 1
     previewImage: {fileID: 21300000, guid: 144aa74618b85974a9a50f612c2fa8fd, type: 3}
     information: 456
-  - stageName: 2
+    stageSceneName: 
+  - stageNumber: 2
     previewImage: {fileID: 21300000, guid: bb1928aff4fd4cf44af1f629dc14ef9b, type: 3}
     information: 6789
-  - stageName: 3
+    stageSceneName: 
+  - stageNumber: 3
     previewImage: {fileID: 21300000, guid: 612c5e166a121e3449dad067fbdc37a4, type: 3}
     information: 3562546
-  - stageName: 4
+    stageSceneName: 
+  - stageNumber: 4
     previewImage: {fileID: 21300000, guid: 02800fb9cff14da47a04572790384d8b, type: 3}
     information: 14134
+    stageSceneName: 
 --- !u!1 &1740149589
 GameObject:
   m_ObjectHideFlags: 0
