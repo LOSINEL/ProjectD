@@ -125,3 +125,4 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 24a36bc59b58ef4478105ae9ba3668b5, type: 2}
     - {fileID: 11400000, guid: 1ce097686651cc4429d33ae464157131, type: 2}
     - {fileID: 11400000, guid: a4f9ea832c70f6b46988e1e7cf65602a, type: 2}
+  dropItem: {fileID: 695284003870268069, guid: a4635800e9d466947a1abee6e09dcdd4, type: 3}

@@ -13,6 +13,7 @@ public class InteractArea : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) && objects[0].TryGetComponent(out IInteractable tmp))
             {
                 tmp.Interact();
+                objects.Remove(objects[0]);
             }
         }
     }

@@ -27,6 +27,7 @@ public class MonsterSO : ScriptableObject
     public DropItem[] DropItems { get { return dropItems; } }
     public int Gold { get { return (int)Random.Range(gold * 0.75f, gold * 1.4f); } }
 
+    [System.Serializable]
     public class DropItem
     {
         [SerializeField] Enums.ITEM_GRADE itemGrade;

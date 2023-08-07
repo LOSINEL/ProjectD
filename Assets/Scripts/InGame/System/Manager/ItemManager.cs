@@ -9,6 +9,9 @@ public class ItemManager : MonoBehaviour
     [SerializeField] SerializableDictionary<ItemSO, WeaponSO> weapons = new();
     [SerializeField] SerializableDictionary<ItemSO, ArmorSO> armors = new();
     [SerializeField] SerializableDictionary<ItemSO, AccessorySO> accessories = new();
+    [SerializeField] GameObject dropItem;
+
+    public GameObject DropItem { get { return dropItem; } }
 
     private void Awake()
     {

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     [SerializeField] protected MonsterSO monsterData;
-    [SerializeField] GameObject dropItem;
 
     float nowHp;
     protected bool enemyCheck = false;
@@ -52,7 +51,7 @@ public class Monster : MonoBehaviour
     void Die()
     {
         // Inventory.instance.AddGold(monsterData.Gold);
-        // DropItems();
+        DropItems();
         gameObject.SetActive(false);
     }
 
@@ -63,9 +62,16 @@ public class Monster : MonoBehaviour
         {
             if (monsterData.DropItems[i].IsDropItem)
             {
-                GameObject tmpObj = Instantiate(dropItem, Vector3.zero, Quaternion.identity);
+                GameObject tmpObj = Instantiate(ItemManager.instance.DropItem, tr.position + RandomPos(), Quaternion.identity);
                 tmpObj.GetComponent<DropItem>().Init(monsterData.DropItems[i].ItemGrade);
             }
         }
+    }
+
+    Vector3 RandomPos()
+    {
+        Vector3 tmp = Random.insideUnitSphere;
+        tmp.y = 1f;
+        return tmp;
     }
 }

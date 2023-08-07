@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class DropItem : MonoBehaviour, IInteractable
 {
-    ItemSO item;
+    [SerializeField] ItemSO item;
     [SerializeField] ParticleSystemRenderer particle;
-
-    private void Start()
-    {
-        Init(Enums.ITEM_GRADE.NORMAL);
-    }
 
     public void Init(Enums.ITEM_GRADE ItemGrade)
     {

@@ -4892,6 +4892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b92a2e6ddcb4c41b3ec5846d2e7c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particle: {fileID: 1160611449}
 --- !u!65 &1091454736
 BoxCollider:
   m_ObjectHideFlags: 0

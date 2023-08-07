@@ -21,4 +21,13 @@ MonoBehaviour:
   isGround: 1
   isMeleeAttack: 1
   monsterType: 0
+  dropItems:
+  - itemGrade: 0
+    dropPercentage: 1
+  - itemGrade: 1
+    dropPercentage: 1
+  - itemGrade: 2
+    dropPercentage: 1
+  - itemGrade: 3
+    dropPercentage: 1
   gold: 6
