@@ -13,7 +13,6 @@ public class ConsumableSlotController : MonoBehaviour
     private void Start()
     {
         _consumableSlotImage = GetComponent<Image>();
-        UpdateConsumableCountText(3, 5);
     }
 
     public void UpdateConsumableCountText(int count = 0, int maxCount = 0)
