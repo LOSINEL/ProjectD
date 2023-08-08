@@ -13,4 +13,6 @@ public static class Nums
     public const float monsterIdleTimeMax = 5f;
     public const float monsterMoveTimeMin = 1f;
     public const float monsterMoveTimeMax = 2f;
+    public const float playerInformationUIRefreshTime = 0.1f;
+    public const int maxInventoryItemSlotCount = 18;
 }

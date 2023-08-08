@@ -4,21 +4,25 @@ using UnityEngine;
 
 using Assets.Scripts.InGame.UI.GameSettings;
 
-public class GameSettingsController : MonoBehaviour
+public class GameSettingsController : SingletonMonoBehavior<GameSettingsController>
 {
     [SerializeField]
     private GameObject _gameSettingsWindow;
+
     [SerializeField]
     private AbstractGameSettingController[] _controllers;
+
     [SerializeField]
     private Dictionary<Enums.GAME_SETTING_TYPE, IGameSettingReadable> _gameSettings;
 
     public bool IsGameSettingsWindowOn
     {
-        get
-        {
-            return _gameSettingsWindow.activeSelf;
-        }
+        get { return _gameSettingsWindow.activeSelf; }
+    }
+
+    public bool IsGameSettingsWindowClosed
+    {
+        get { return _gameSettingsWindow.activeSelf == false; }
     }
 
     private void Start()
@@ -31,7 +35,8 @@ public class GameSettingsController : MonoBehaviour
         foreach (AbstractGameSettingController controller in _controllers)
         {
             Enums.GAME_SETTING_TYPE settingType = controller.GetGameSettingType();
-            if (_gameSettings.ContainsKey(settingType)) continue;
+            if (_gameSettings.ContainsKey(settingType))
+                continue;
 
             _gameSettings[settingType] = (IGameSettingReadable)controller;
         }
